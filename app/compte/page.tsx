@@ -29,7 +29,7 @@ export default async function ComptePage() {
       <header className="py-6 px-6 md:px-12 flex items-center justify-between border-b border-border">
         <Link href="/" className="relative h-10 w-28">
           <Image
-            src="https://interloft.ma/storage/2026/03/LOGO.png"
+            src="/images/logo.png"
             alt="Interloft"
             fill
             className="object-contain"

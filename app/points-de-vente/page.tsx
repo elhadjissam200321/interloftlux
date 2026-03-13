@@ -4,7 +4,7 @@ import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 
 export const metadata = {
-  title: 'Points de Vente — INTeloft',
+  title: 'Points de Vente — INTERloft',
   description: 'Retrouvez nos showrooms à Casablanca et Marrakech, Maroc.',
 }
 

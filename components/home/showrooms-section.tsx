@@ -9,7 +9,7 @@ export default function ShowroomsSection() {
         <div className="relative min-h-[320px] md:min-h-0 overflow-hidden">
           <Image
             src="/images/showroom.jpg"
-            alt="Showroom INTeloft"
+            alt="Showroom INTERloft"
             fill
             className="object-cover"
             sizes="(max-width: 768px) 100vw, 50vw"

@@ -19,9 +19,9 @@ export async function generateMetadata({
 }) {
   const { slug } = await params
   const product = getProductBySlug(slug)
-  if (!product) return { title: 'INTeloft' }
+  if (!product) return { title: 'INTERloft' }
   return {
-    title: `${product.name} — INTeloft`,
+    title: `${product.name} — INTERloft`,
     description: product.description,
   }
 }

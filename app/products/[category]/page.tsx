@@ -12,9 +12,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ category: string }> }) {
   const { category: slug } = await params
   const cat = getCategoryBySlug(slug)
-  if (!cat) return { title: 'INTeloft' }
+  if (!cat) return { title: 'INTERloft' }
   return {
-    title: `${cat.label} — INTeloft`,
+    title: `${cat.label} — INTERloft`,
     description: `Découvrez notre collection de ${cat.label.toLowerCase()}.`,
   }
 }

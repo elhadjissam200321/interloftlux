@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* INTeloft — warm ivory / near-black / sand palette */
+  /* INTERloft — warm ivory / near-black / sand palette */
   --background: oklch(0.980 0.005 80);        /* warm ivory */
   --foreground: oklch(0.12 0 0);              /* near-black */
   --card: oklch(0.975 0.005 80);

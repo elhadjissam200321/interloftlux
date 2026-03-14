@@ -148,26 +148,9 @@ export default function HomeHeader2() {
           </div>
         ))}
 
-        {/* ── Top bar: nav left | logo center | icons right ── */}
-        <div className="absolute top-0 left-0 right-0 z-30 flex items-center justify-between px-8 md:px-12 pt-8 md:pt-10">
-
-          {/* Left: nav links (desktop) / hidden on mobile */}
-          <nav className="hidden md:flex items-center gap-8">
-            <Link
-              href="/#introduction"
-              className="font-sans text-[11px] tracking-[0.2em] uppercase text-background/80 hover:text-background transition-colors"
-            >
-              Introduction
-            </Link>
-            <ProduitsNav />
-            <CollectionsNav />
-          </nav>
-
-          {/* Left: empty spacer on mobile to keep logo centered */}
-          <div className="md:hidden w-8" />
-
-          {/* Center: logo */}
-          <Link href="/accueil-2" className="absolute left-1/2 -translate-x-1/2 top-8 md:top-10 block h-14 md:h-20 w-36 md:w-48">
+        {/* ── Logo — centered at top ── */}
+        <div className="absolute top-0 left-0 right-0 z-30 flex justify-center pt-8 md:pt-10 pointer-events-none">
+          <Link href="/accueil-2" className="relative block h-14 md:h-20 w-36 md:w-48 pointer-events-auto">
             <Image
               src="/images/logo.png"
               alt="Interloft"
@@ -176,25 +159,37 @@ export default function HomeHeader2() {
               priority
             />
           </Link>
-
-          {/* Right: search + user */}
-          <div className="flex items-center gap-5">
-            <button
-              onClick={() => setSearchOpen(true)}
-              aria-label="Rechercher"
-              className="text-background/80 hover:text-background transition-colors cursor-pointer"
-            >
-              <Search size={16} strokeWidth={1.5} />
-            </button>
-            <Link
-              href="/compte"
-              aria-label="Compte"
-              className="text-background/80 hover:text-background transition-colors"
-            >
-              <User size={16} strokeWidth={1.5} />
-            </Link>
-          </div>
         </div>
+
+        {/* ── Icons — top right ── */}
+        <div className="absolute top-8 md:top-10 right-8 md:right-12 z-30 flex items-center gap-5">
+          <button
+            onClick={() => setSearchOpen(true)}
+            aria-label="Rechercher"
+            className="text-background/80 hover:text-background transition-colors cursor-pointer"
+          >
+            <Search size={16} strokeWidth={1.5} />
+          </button>
+          <Link
+            href="/compte"
+            aria-label="Compte"
+            className="text-background/80 hover:text-background transition-colors"
+          >
+            <User size={16} strokeWidth={1.5} />
+          </Link>
+        </div>
+
+        {/* ── Vertical nav — left side, bottom-anchored (desktop) ── */}
+        <nav className="hidden md:flex flex-col gap-3 absolute left-10 bottom-20 z-30">
+          <Link
+            href="/#introduction"
+            className="font-sans text-[11px] tracking-[0.2em] uppercase text-background/80 hover:text-background transition-colors"
+          >
+            Introduction
+          </Link>
+          <ProduitsNav />
+          <CollectionsNav />
+        </nav>
 
         {/* Mobile menu button — top left */}
         <button

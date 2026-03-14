@@ -1,16 +1,103 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Search, User, Menu, X } from 'lucide-react'
-import { products } from '@/lib/data'
-import ProductsDropdown from '@/components/products-dropdown'
-import CollectionsDropdown from '@/components/collections-dropdown'
-import MobileProductsMenu from '@/components/mobile-products-menu'
-import MobileCollectionsMenu from '@/components/mobile-collections-menu'
+import { Search, User, X, ChevronDown } from 'lucide-react'
+import { products, collections } from '@/lib/data'
 import SearchModal from '@/components/search-modal'
 
+// ── Inline Produits dropdown (vertical style) ──────────────────────────────
+function ProduitsNav() {
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [])
+
+  const categories = [
+    { label: 'Nouveautés',         href: '/products/nouveautes' },
+    { label: 'Canapés',            href: '/products/canapes' },
+    { label: 'Canapés composables',href: '/products/canapes-composables' },
+    { label: 'Fauteuils',          href: '/products/fauteuils' },
+    { label: 'Lits',               href: '/products/lits' },
+    { label: 'Meubles',            href: '/products/meubles' },
+    { label: 'Tringlerie',         href: '/products/tringlerie' },
+  ]
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex items-center gap-1.5 font-sans text-[11px] tracking-[0.2em] uppercase text-background/80 hover:text-background transition-colors cursor-pointer"
+      >
+        Produits
+        <ChevronDown size={10} strokeWidth={2} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
+      </button>
+      {open && (
+        <div className="absolute left-0 top-full mt-3 bg-background/95 backdrop-blur-sm shadow-xl min-w-[180px] py-3 z-50">
+          {categories.map((cat) => (
+            <Link
+              key={cat.href}
+              href={cat.href}
+              onClick={() => setOpen(false)}
+              className="block px-5 py-2 font-sans text-[10px] tracking-[0.15em] uppercase text-foreground/70 hover:text-foreground hover:bg-foreground/5 transition-colors"
+            >
+              {cat.label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ── Inline Collections dropdown (vertical style) ───────────────────────────
+function CollectionsNav() {
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [])
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex items-center gap-1.5 font-sans text-[11px] tracking-[0.2em] uppercase text-background/80 hover:text-background transition-colors cursor-pointer"
+      >
+        Collections
+        <ChevronDown size={10} strokeWidth={2} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
+      </button>
+      {open && (
+        <div className="absolute left-0 top-full mt-3 bg-background/95 backdrop-blur-sm shadow-xl min-w-[200px] py-3 z-50">
+          {collections.map((col) => (
+            <Link
+              key={col.id}
+              href={col.href}
+              onClick={() => setOpen(false)}
+              className="block px-5 py-2 font-sans text-[10px] tracking-[0.15em] uppercase text-foreground/70 hover:text-foreground hover:bg-foreground/5 transition-colors"
+            >
+              {col.label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ── Main component ─────────────────────────────────────────────────────────
 export default function HomeHeader2() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -23,16 +110,9 @@ export default function HomeHeader2() {
     return () => clearInterval(interval)
   }, [])
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
-    return () => {
-      document.body.style.overflow = ''
-    }
+    document.body.style.overflow = mobileMenuOpen ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
   }, [mobileMenuOpen])
 
   const currentProduct = products[currentIndex]
@@ -40,7 +120,8 @@ export default function HomeHeader2() {
   return (
     <>
       <header className="w-full relative h-screen min-h-[600px] overflow-hidden bg-foreground">
-        {/* Full-height slides */}
+
+        {/* ── Full-height slides ── */}
         {products.map((product, index) => (
           <div
             key={product.id}
@@ -57,13 +138,13 @@ export default function HomeHeader2() {
               loading={index === 0 ? 'eager' : 'lazy'}
               sizes="100vw"
             />
-            <div className="absolute inset-0 bg-foreground/20" />
+            <div className="absolute inset-0 bg-foreground/25" />
           </div>
         ))}
 
-        {/* Logo centered at top */}
-        <div className="absolute top-8 left-1/2 -translate-x-1/2 z-30">
-          <Link href="/accueil-2" className="relative block h-14 md:h-20 w-36 md:w-48">
+        {/* ── Logo — centered at top ── */}
+        <div className="absolute top-0 left-0 right-0 z-30 flex justify-center pt-8 md:pt-10 pointer-events-none">
+          <Link href="/accueil-2" className="relative block h-14 md:h-20 w-36 md:w-48 pointer-events-auto">
             <Image
               src="/images/logo.png"
               alt="Interloft"
@@ -74,34 +155,46 @@ export default function HomeHeader2() {
           </Link>
         </div>
 
-        {/* Menu button — top left */}
-        <button
-          onClick={() => setMobileMenuOpen(true)}
-          className="absolute top-8 left-8 z-30 text-background/80 hover:text-background transition-colors cursor-pointer"
-          aria-label="Ouvrir le menu"
-        >
-          <Menu size={24} strokeWidth={1.5} />
-        </button>
-
-        {/* Icons — top right */}
-        <div className="absolute top-8 right-8 md:top-10 md:right-12 z-30 flex items-center gap-5">
-          <button 
+        {/* ── Icons — top right ── */}
+        <div className="absolute top-8 md:top-10 right-8 md:right-12 z-30 flex items-center gap-5">
+          <button
             onClick={() => setSearchOpen(true)}
-            aria-label="Rechercher" 
+            aria-label="Rechercher"
             className="text-background/80 hover:text-background transition-colors cursor-pointer"
           >
             <Search size={16} strokeWidth={1.5} />
           </button>
-          <Link 
+          <Link
             href="/compte"
-            aria-label="Compte" 
+            aria-label="Compte"
             className="text-background/80 hover:text-background transition-colors"
           >
             <User size={16} strokeWidth={1.5} />
           </Link>
         </div>
 
-        {/* Product info — bottom left */}
+        {/* ── Vertical nav — left side, centered vertically (desktop only) ── */}
+        <nav className="hidden md:flex flex-col gap-5 absolute left-10 top-1/2 -translate-y-1/2 z-30">
+          <Link
+            href="/#introduction"
+            className="font-sans text-[11px] tracking-[0.2em] uppercase text-background/80 hover:text-background transition-colors"
+          >
+            Introduction
+          </Link>
+          <ProduitsNav />
+          <CollectionsNav />
+        </nav>
+
+        {/* ── Mobile menu button — top left ── */}
+        <button
+          onClick={() => setMobileMenuOpen(true)}
+          className="md:hidden absolute top-8 left-8 z-30 font-sans text-[11px] tracking-[0.2em] uppercase text-background/80 hover:text-background transition-colors cursor-pointer"
+          aria-label="Ouvrir le menu"
+        >
+          Menu
+        </button>
+
+        {/* ── Product info — bottom left ── */}
         <div className="absolute bottom-16 md:bottom-20 left-8 md:left-12 z-20">
           <Link href={`/products/${currentProduct.category}/${currentProduct.slug}`} className="group block">
             <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-background/60 mb-2">
@@ -117,7 +210,14 @@ export default function HomeHeader2() {
           </Link>
         </div>
 
-        {/* Progress indicators — bottom right */}
+        {/* ── Slide counter — bottom left ── */}
+        <div className="absolute bottom-6 left-8 md:left-12 z-20">
+          <span className="font-sans text-[10px] tracking-[0.2em] text-background/60">
+            {String(currentIndex + 1).padStart(2, '0')} / {String(products.length).padStart(2, '0')}
+          </span>
+        </div>
+
+        {/* ── Progress dots — bottom right ── */}
         <div className="absolute bottom-6 right-8 md:right-12 z-20 flex items-center gap-3">
           {products.map((_, index) => (
             <button
@@ -130,25 +230,17 @@ export default function HomeHeader2() {
             />
           ))}
         </div>
-
-        {/* Slide counter — bottom left */}
-        <div className="absolute bottom-6 left-8 md:left-12 z-20">
-          <span className="font-sans text-[10px] tracking-[0.2em] text-background/60">
-            {String(currentIndex + 1).padStart(2, '0')} / {String(products.length).padStart(2, '0')}
-          </span>
-        </div>
       </header>
 
-      {/* Search Modal */}
+      {/* ── Search Modal ── */}
       <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
 
-      {/* Mobile Menu Overlay */}
+      {/* ── Mobile Menu Overlay ── */}
       <div
         className={`fixed inset-0 z-50 bg-background flex flex-col justify-center items-center transition-all duration-500 ${
           mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
       >
-        {/* Close button */}
         <button
           onClick={() => setMobileMenuOpen(false)}
           className="absolute top-6 right-6 text-foreground/60 hover:text-foreground transition-colors"
@@ -156,34 +248,27 @@ export default function HomeHeader2() {
         >
           <X size={28} strokeWidth={1} />
         </button>
-
         <nav className="flex flex-col items-center gap-8">
           <Link
-            href="/about"
+            href="/#introduction"
             onClick={() => setMobileMenuOpen(false)}
             className="font-serif text-3xl font-light tracking-widest uppercase text-foreground hover:opacity-50 transition-opacity"
           >
-            {"\u00C0 propos"}
+            Introduction
           </Link>
-          
-          <MobileProductsMenu onLinkClick={() => setMobileMenuOpen(false)} />
-          
-          <MobileCollectionsMenu onLinkClick={() => setMobileMenuOpen(false)} />
-          
           <Link
-            href="/collaborations"
+            href="/products"
             onClick={() => setMobileMenuOpen(false)}
             className="font-serif text-3xl font-light tracking-widest uppercase text-foreground hover:opacity-50 transition-opacity"
           >
-            Collaborations
+            Produits
           </Link>
-          
           <Link
-            href="/contact"
+            href="/collections/beldi"
             onClick={() => setMobileMenuOpen(false)}
             className="font-serif text-3xl font-light tracking-widest uppercase text-foreground hover:opacity-50 transition-opacity"
           >
-            Contact
+            Collections
           </Link>
         </nav>
       </div>

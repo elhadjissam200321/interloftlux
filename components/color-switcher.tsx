@@ -146,8 +146,7 @@ export default function ColorSwitcher() {
       {/* Panel */}
       {open && (
         <div
-          className="w-72 rounded-none shadow-2xl border border-border overflow-hidden"
-          style={{ background: 'color-mix(in srgb, var(--background) 97%, transparent)', backdropFilter: 'blur(12px)' }}
+          className="w-72 rounded-none shadow-2xl border border-border overflow-hidden bg-background text-foreground"
         >
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-border">
@@ -260,17 +259,17 @@ export default function ColorSwitcher() {
       {/* Toggle button */}
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 px-4 py-2.5 border border-border shadow-lg text-[10px] tracking-[0.15em] uppercase font-sans transition-all hover:shadow-xl cursor-pointer"
+        className="flex items-center gap-2 px-4 py-2.5 border border-border shadow-lg text-[10px] tracking-[0.15em] uppercase font-sans transition-all hover:shadow-xl cursor-pointer text-foreground"
         style={{ 
-          backgroundColor: activeHex, 
-          color: hexLightness(activeHex) < 0.25 ? '#F8F5F0' : '#1A1510',
-          borderColor: hexLightness(activeHex) < 0.25 ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.15)'
+          backgroundColor: 'transparent',
+          color: 'inherit',
+          borderColor: 'inherit'
         }}
         title="Changer la couleur du thème"
       >
         <div className="w-3 h-3 rounded-full border" style={{ 
           backgroundColor: activeHex,
-          borderColor: hexLightness(activeHex) < 0.25 ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.3)'
+          borderColor: 'currentColor'
         }} />
         Couleur
         <ChevronRight size={11} strokeWidth={2} className={`transition-transform ${open ? 'rotate-90' : ''}`} />

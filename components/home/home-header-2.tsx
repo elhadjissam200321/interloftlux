@@ -116,8 +116,6 @@ export default function HomeHeader2() {
     return () => { document.body.style.overflow = '' }
   }, [mobileMenuOpen])
 
-  const currentProduct = products[currentIndex]
-
   return (
     <>
       <header className="w-full relative h-screen min-h-[600px] overflow-hidden bg-foreground">
@@ -203,44 +201,7 @@ export default function HomeHeader2() {
           </div>
         </div>
 
-        {/* ── Product info — bottom left ── */}
-        <div className="absolute bottom-16 md:bottom-20 left-8 md:left-12 z-20">
-          <Link href={`/products/${currentProduct.category}/${currentProduct.slug}`} className="group block">
-            <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-background/60 mb-2">
-              {currentProduct.category.replace(/-/g, ' ')}
-            </p>
-            <h2 className="font-serif text-3xl md:text-5xl lg:text-6xl font-light text-background mb-4 tracking-wide">
-              {currentProduct.name}
-            </h2>
-            <span className="inline-flex items-center gap-3 font-sans text-[10px] tracking-[0.25em] uppercase text-background/80 group-hover:text-background transition-colors">
-              {"\u0044\u00e9couvrir"}
-              <span className="w-8 h-px bg-current transition-all group-hover:w-12" />
-            </span>
-          </Link>
-        </div>
-
-        {/* ── Slide counter — bottom left ── */}
-        <div className="absolute bottom-6 left-8 md:left-12 z-20">
-          <span className="font-sans text-[10px] tracking-[0.2em] text-background/60">
-            {String(currentIndex + 1).padStart(2, '0')} / {String(products.length).padStart(2, '0')}
-          </span>
-        </div>
-
-        {/* ── Progress dots — bottom right ── */}
-        <div className="absolute bottom-6 right-8 md:right-12 z-20 flex items-center gap-3">
-          {products.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`h-px transition-all duration-500 ${
-                index === currentIndex ? 'bg-background w-10' : 'bg-background/40 w-6'
-              }`}
-              aria-label={`Slide ${index + 1}`}
-            />
-          ))}
-        </div>
-
-        {/* ── Footer overlay — bottom of hero ── */}
+        {/* ── Footer overlay — pinned to bottom of hero ── */}
         <div className="absolute bottom-0 left-0 right-0 z-20">
           <FooterV2 overlay />
         </div>

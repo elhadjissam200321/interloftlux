@@ -5,134 +5,91 @@ interface FooterV2Props {
 }
 
 export default function FooterV2({ overlay = false }: FooterV2Props) {
-  const text = overlay
-    ? 'text-background/60 hover:text-background'
-    : 'text-muted-foreground hover:text-foreground'
+  const base = overlay
+    ? 'text-background/50 hover:text-background/90'
+    : 'text-foreground/40 hover:text-foreground/80'
 
-  const labelClass = overlay
-    ? 'text-[10px] tracking-[0.25em] uppercase font-sans text-background/40'
-    : 'label-text'
+  const label = overlay
+    ? 'text-[9px] tracking-[0.3em] uppercase font-sans text-background/30 mb-4 block'
+    : 'text-[9px] tracking-[0.3em] uppercase font-sans text-foreground/25 mb-4 block'
 
-  const borderClass = overlay
-    ? 'border-background/20'
-    : 'border-border'
+  const divider = overlay ? 'border-background/10' : 'border-foreground/10'
 
-  const bottomTextClass = overlay
-    ? 'text-background/40'
-    : 'text-muted-foreground'
+  const muted = overlay ? 'text-background/40' : 'text-foreground/30'
 
   return (
-    <footer
-      className={
-        overlay
-          ? 'w-full relative z-20'
-          : 'border-t border-border bg-background w-full'
-      }
-    >
-      {/* Top divider for overlay mode */}
-      {overlay && (
-        <div className="w-full border-t border-background/20" />
-      )}
+    <footer className={overlay ? 'w-full' : 'w-full border-t border-foreground/8 bg-background'}>
 
-      <div className="px-6 md:px-12 lg:px-16 py-10 md:py-14">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+      {overlay && <div className={`w-full border-t ${divider}`} />}
+
+      <div className="px-8 md:px-12 lg:px-16 pt-8 pb-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-8">
 
           {/* Contact */}
           <div>
-            <p className={`${labelClass} mb-5`}>CONTACT</p>
-            <div className="flex flex-col gap-3">
-              <a
-                href="tel:+212660252070"
-                className={`font-sans text-xs ${text} transition-colors`}
-              >
+            <span className={label}>Contact</span>
+            <div className="flex flex-col gap-2.5">
+              <a href="tel:+212660252070" className={`font-sans text-[10px] font-light tracking-wide ${base} transition-colors`}>
                 +212 660-252070
               </a>
-              <a
-                href="mailto:contact@interloft.ma"
-                className={`font-sans text-xs ${text} transition-colors`}
-              >
+              <a href="mailto:contact@interloft.ma" className={`font-sans text-[10px] font-light tracking-wide ${base} transition-colors`}>
                 contact@interloft.ma
               </a>
-              <div className="flex flex-col gap-1 mt-1">
-                <p className={`font-sans text-xs ${overlay ? 'text-background/60' : 'text-muted-foreground'}`}>
-                  Casablanca, Maroc
-                </p>
-                <p className={`font-sans text-xs ${overlay ? 'text-background/60' : 'text-muted-foreground'}`}>
-                  Marrakech, Maroc
-                </p>
-              </div>
+              <p className={`font-sans text-[10px] font-light tracking-wide ${muted} mt-1`}>Casablanca</p>
+              <p className={`font-sans text-[10px] font-light tracking-wide ${muted}`}>Marrakech</p>
             </div>
           </div>
 
-          {/* Customer Service */}
+          {/* Service client */}
           <div>
-            <p className={`${labelClass} mb-5`}>SERVICE CLIENT</p>
-            <nav className="flex flex-col gap-3">
-              <Link
-                href="/privacy"
-                className={`font-sans text-xs ${text} transition-colors`}
-              >
-                Politique de confidentialité
+            <span className={label}>Service client</span>
+            <nav className="flex flex-col gap-2.5">
+              <Link href="/privacy" className={`font-sans text-[10px] font-light tracking-wide ${base} transition-colors`}>
+                Confidentialité
               </Link>
-              <Link
-                href="/cookies"
-                className={`font-sans text-xs ${text} transition-colors`}
-              >
-                Politique des cookies
+              <Link href="/cookies" className={`font-sans text-[10px] font-light tracking-wide ${base} transition-colors`}>
+                Cookies
               </Link>
-              <Link
-                href="/terms"
-                className={`font-sans text-xs ${text} transition-colors`}
-              >
-                Conditions générales
+              <Link href="/terms" className={`font-sans text-[10px] font-light tracking-wide ${base} transition-colors`}>
+                Conditions
               </Link>
             </nav>
           </div>
 
-          {/* Brand */}
+          {/* Interloft */}
           <div>
-            <p className={`${labelClass} mb-5`}>INTERLOFT</p>
-            <div className="flex flex-col gap-3">
-              <p className={`font-sans text-xs ${overlay ? 'text-background/60' : 'text-muted-foreground'}`}>
-                Showroom Casablanca
-              </p>
-              <p className={`font-sans text-xs ${overlay ? 'text-background/60' : 'text-muted-foreground'}`}>
-                Sur rendez-vous uniquement
-              </p>
+            <span className={label}>Interloft</span>
+            <div className="flex flex-col gap-2.5">
+              <p className={`font-sans text-[10px] font-light tracking-wide ${muted}`}>Showroom Casablanca</p>
+              <p className={`font-sans text-[10px] font-light tracking-wide ${muted}`}>Sur rendez-vous</p>
             </div>
           </div>
 
-          {/* Social */}
+          {/* Suivez-nous */}
           <div>
-            <p className={`${labelClass} mb-5`}>SUIVEZ-NOUS</p>
-            <div className="flex flex-col gap-3">
+            <span className={label}>Suivez-nous</span>
+            <div className="flex flex-col gap-2.5">
               <a
                 href="https://instagram.com/interloft"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`font-sans text-xs ${text} transition-colors`}
+                className={`font-sans text-[10px] font-light tracking-wide ${base} transition-colors`}
               >
                 Instagram
               </a>
-              <Link
-                href="/newsletter"
-                className={`font-sans text-xs ${text} transition-colors`}
-              >
+              <Link href="/newsletter" className={`font-sans text-[10px] font-light tracking-wide ${base} transition-colors`}>
                 Newsletter
               </Link>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Bottom bar */}
-      <div className={`border-t ${borderClass} px-6 md:px-12 lg:px-16 py-5 flex flex-col md:flex-row items-center justify-between gap-3`}>
-        <p className={`font-sans text-[10px] ${bottomTextClass} tracking-widest uppercase`}>
-          © {new Date().getFullYear()} INTERloft. Tous droits réservés.
-        </p>
-        <p className={`font-sans text-[10px] ${bottomTextClass} tracking-widest uppercase`}>
-          Mobilier Contemporain — Maroc
-        </p>
+        {/* Bottom bar — flush, no centering */}
+        <div className={`border-t ${divider} pt-4`}>
+          <p className={`font-sans text-[9px] font-light tracking-[0.25em] uppercase ${muted}`}>
+            © {new Date().getFullYear()} Interloft
+          </p>
+        </div>
       </div>
     </footer>
   )

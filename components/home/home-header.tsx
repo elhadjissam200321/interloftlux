@@ -74,28 +74,10 @@ export default function HomeHeader() {
           </Link>
         </div>
 
-        {/* Desktop Nav overlay — left */}
-        <nav className="hidden md:flex absolute top-10 left-12 z-30 flex-col gap-4">
-          <Link
-            href="/about"
-            className="nav-link text-background/80 hover:text-background transition-colors"
-          >
-            À propos
-          </Link>
-          <ProductsDropdown variant="light" />
-          <CollectionsDropdown variant="light" />
-          <Link
-            href="/collaborations"
-            className="nav-link text-background/80 hover:text-background transition-colors"
-          >
-            Collaborations
-          </Link>
-        </nav>
-
-        {/* Mobile menu button */}
+        {/* Menu button — top left */}
         <button
           onClick={() => setMobileMenuOpen(true)}
-          className="md:hidden absolute top-8 left-8 z-30 text-background/80 hover:text-background transition-colors cursor-pointer"
+          className="absolute top-8 left-8 z-30 text-background/80 hover:text-background transition-colors cursor-pointer"
           aria-label="Ouvrir le menu"
         >
           <Menu size={24} strokeWidth={1.5} />

@@ -5,7 +5,7 @@ export type ProductCategory =
   | 'fauteuils'
   | 'lits'
   | 'meubles'
-  | 'rideaux'
+  | 'tringlerie'
 
 export interface Product {
   id: string
@@ -64,10 +64,10 @@ export const categories: Category[] = [
     href: '/products/meubles',
   },
   {
-    id: 'rideaux',
-    label: 'Rideaux',
-    image: '/images/rideaux.jpg',
-    href: '/products/rideaux',
+    id: 'tringlerie',
+    label: 'Tringlerie',
+    image: '/images/tringlerie.jpg',
+    href: '/products/tringlerie',
   },
 ]
 
@@ -146,15 +146,15 @@ export const products: Product[] = [
   },
   {
     id: '7',
-    slug: 'rideaux-seville',
-    name: 'Rideaux Séville',
-    category: 'rideaux',
+    slug: 'tringle-classique',
+    name: 'Tringle Classique',
+    category: 'tringlerie',
     description:
-      'Confectionnés à la main dans un lin épais et drapant, les Rideaux Séville filtrent la lumière naturelle avec une précision poétique. Disponibles en plusieurs coloris naturels.',
-    materials: ['100% lin lavé', 'Oeillets en laiton brossé', 'Doublure en coton naturel'],
-    dimensions: 'Largeur 140 cm — Hauteur sur mesure de 200 à 300 cm',
-    image: '/images/rideaux.jpg',
-    gallery: ['/images/rideaux.jpg'],
+      'La Tringle Classique allie élégance et fonctionnalité avec ses finitions soignées en laiton brossé. Un accessoire indispensable pour sublimer vos rideaux.',
+    materials: ['Laiton massif brossé', 'Embouts décoratifs', 'Support mural intégré'],
+    dimensions: 'Longueur sur mesure de 100 à 400 cm — Diamètre 28 mm',
+    image: '/images/tringlerie.jpg',
+    gallery: ['/images/tringlerie.jpg'],
   },
 ]
 
@@ -168,4 +168,48 @@ export function getProductBySlug(slug: string): Product | undefined {
 
 export function getCategoryBySlug(slug: string): Category | undefined {
   return categories.find((c) => c.id === slug)
+}
+
+export interface Collection {
+  id: string
+  label: string
+  description: string
+  href: string
+}
+
+export const collections: Collection[] = [
+  {
+    id: 'beldi',
+    label: 'Collection Beldi',
+    description: 'L\'essence du patrimoine marocain revisité avec une touche contemporaine.',
+    href: '/collections/beldi',
+  },
+  {
+    id: 'moderne',
+    label: 'Collection Moderne',
+    description: 'Des lignes épurées et un design minimaliste pour les espaces actuels.',
+    href: '/collections/moderne',
+  },
+  {
+    id: 'contemporaine',
+    label: 'Collection Contemporaine',
+    description: 'L\'équilibre parfait entre tradition et innovation.',
+    href: '/collections/contemporaine',
+  },
+  {
+    id: 'nature',
+    label: 'Collection Nature',
+    description: 'Des matériaux naturels pour une harmonie avec l\'environnement.',
+    href: '/collections/nature',
+  },
+  {
+    id: 'luxe',
+    label: 'Collection Luxe',
+    description: 'L\'excellence artisanale pour des intérieurs d\'exception.',
+    href: '/collections/luxe',
+  },
+]
+
+export function getCollectionBySlug(slug: string): Collection | undefined {
+  return collections.find((c) => c.id === slug)
 }

@@ -5,12 +5,14 @@ import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { Search, User } from 'lucide-react'
 import ProductsDropdown from './products-dropdown'
+import CollectionsDropdown from './collections-dropdown'
 import MobileProductsMenu from './mobile-products-menu'
+import MobileCollectionsMenu from './mobile-collections-menu'
 import SearchModal from './search-modal'
 
 const staticLinks = [
   { label: 'À propos', href: '/about' },
-  { label: 'Points de Vente', href: '/points-de-vente' },
+  { label: 'Collaborations', href: '/collaborations' },
   { label: 'Contact', href: '/contact' },
 ]
 
@@ -72,13 +74,15 @@ export default function Navbar() {
             
             <ProductsDropdown variant={scrolled ? 'dark' : 'light'} />
             
+            <CollectionsDropdown variant={scrolled ? 'dark' : 'light'} />
+            
             <Link
-              href="/points-de-vente"
+              href="/collaborations"
               className={`nav-link transition-opacity hover:opacity-60 ${
                 scrolled ? 'text-foreground' : 'text-background'
               }`}
             >
-              Points de Vente
+              Collaborations
             </Link>
             
             <Link
@@ -157,12 +161,14 @@ export default function Navbar() {
           
           <MobileProductsMenu onLinkClick={() => setMenuOpen(false)} />
           
+          <MobileCollectionsMenu onLinkClick={() => setMenuOpen(false)} />
+          
           <Link
-            href="/points-de-vente"
+            href="/collaborations"
             onClick={() => setMenuOpen(false)}
             className="font-serif text-3xl font-light tracking-widest uppercase text-foreground hover:opacity-50 transition-opacity"
           >
-            Points de Vente
+            Collaborations
           </Link>
           
           <Link

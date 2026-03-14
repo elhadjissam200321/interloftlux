@@ -19,9 +19,10 @@ export default function Footer() {
           <p className="label-text mb-6">Navigation</p>
           <nav className="flex flex-col gap-3">
             {[
-              { label: 'Introduction', href: '/#introduction' },
-              { label: 'Products', href: '/products' },
-              { label: 'Points de Vente', href: '/points-de-vente' },
+              { label: 'À propos', href: '/about' },
+              { label: 'Produits', href: '/products' },
+              { label: 'Collections', href: '/collections/beldi' },
+              { label: 'Collaborations', href: '/collaborations' },
               { label: 'Contact', href: '/contact' },
             ].map((link) => (
               <Link

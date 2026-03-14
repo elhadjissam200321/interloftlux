@@ -142,57 +142,65 @@ export default function HomeHeader2() {
           </div>
         ))}
 
-        {/* ── Logo — centered at top ── */}
-        <div className="absolute top-0 left-0 right-0 z-30 flex justify-center pt-8 md:pt-10 pointer-events-none">
-          <Link href="/accueil-2" className="relative block h-14 md:h-20 w-36 md:w-48 pointer-events-auto">
-            <Image
-              src="/images/logo.png"
-              alt="Interloft"
-              fill
-              className="object-contain brightness-0 invert"
-              priority
-            />
-          </Link>
+        {/* ── Top bar: logo centered, nav left, icons right — all at top ── */}
+        <div className="absolute top-0 left-0 right-0 z-30 pt-8 md:pt-10">
+
+          {/* Logo row — centered */}
+          <div className="flex justify-center pointer-events-none">
+            <Link href="/accueil-2" className="relative block h-14 md:h-20 w-36 md:w-48 pointer-events-auto">
+              <Image
+                src="/images/logo.png"
+                alt="Interloft"
+                fill
+                className="object-contain brightness-0 invert"
+                priority
+              />
+            </Link>
+          </div>
+
+          {/* Nav + Icons row — directly below logo */}
+          <div className="flex items-start justify-between px-8 md:px-12 mt-6 md:mt-8">
+
+            {/* Left: vertical nav (desktop) / Menu button (mobile) */}
+            <nav className="hidden md:flex flex-col gap-4">
+              <Link
+                href="/#introduction"
+                className="font-sans text-[11px] tracking-[0.2em] uppercase text-background/80 hover:text-background transition-colors"
+              >
+                Introduction
+              </Link>
+              <ProduitsNav />
+              <CollectionsNav />
+            </nav>
+
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="md:hidden font-sans text-[11px] tracking-[0.2em] uppercase text-background/80 hover:text-background transition-colors cursor-pointer"
+              aria-label="Ouvrir le menu"
+            >
+              Menu
+            </button>
+
+            {/* Right: icons */}
+            <div className="flex items-center gap-5">
+              <button
+                onClick={() => setSearchOpen(true)}
+                aria-label="Rechercher"
+                className="text-background/80 hover:text-background transition-colors cursor-pointer"
+              >
+                <Search size={16} strokeWidth={1.5} />
+              </button>
+              <Link
+                href="/compte"
+                aria-label="Compte"
+                className="text-background/80 hover:text-background transition-colors"
+              >
+                <User size={16} strokeWidth={1.5} />
+              </Link>
+            </div>
+
+          </div>
         </div>
-
-        {/* ── Icons — top right ── */}
-        <div className="absolute top-8 md:top-10 right-8 md:right-12 z-30 flex items-center gap-5">
-          <button
-            onClick={() => setSearchOpen(true)}
-            aria-label="Rechercher"
-            className="text-background/80 hover:text-background transition-colors cursor-pointer"
-          >
-            <Search size={16} strokeWidth={1.5} />
-          </button>
-          <Link
-            href="/compte"
-            aria-label="Compte"
-            className="text-background/80 hover:text-background transition-colors"
-          >
-            <User size={16} strokeWidth={1.5} />
-          </Link>
-        </div>
-
-        {/* ── Vertical nav — left side, centered vertically (desktop only) ── */}
-        <nav className="hidden md:flex flex-col gap-5 absolute left-10 top-1/2 -translate-y-1/2 z-30">
-          <Link
-            href="/#introduction"
-            className="font-sans text-[11px] tracking-[0.2em] uppercase text-background/80 hover:text-background transition-colors"
-          >
-            Introduction
-          </Link>
-          <ProduitsNav />
-          <CollectionsNav />
-        </nav>
-
-        {/* ── Mobile menu button — top left ── */}
-        <button
-          onClick={() => setMobileMenuOpen(true)}
-          className="md:hidden absolute top-8 left-8 z-30 font-sans text-[11px] tracking-[0.2em] uppercase text-background/80 hover:text-background transition-colors cursor-pointer"
-          aria-label="Ouvrir le menu"
-        >
-          Menu
-        </button>
 
         {/* ── Product info — bottom left ── */}
         <div className="absolute bottom-16 md:bottom-20 left-8 md:left-12 z-20">

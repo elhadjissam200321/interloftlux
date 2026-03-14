@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Cormorant_Garamond, Inter } from 'next/font/google'
 import './globals.css'
 import Preloader from '@/components/preloader'
+import ColorSwitcher from '@/components/color-switcher'
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -40,6 +41,7 @@ export default function RootLayout({
       <body className="font-sans antialiased bg-background text-foreground">
         <Preloader />
         {children}
+        <ColorSwitcher />
       </body>
     </html>
   )

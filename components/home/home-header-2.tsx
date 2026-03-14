@@ -1,109 +1,16 @@
 "use client"
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Search, User, ChevronDown, X } from 'lucide-react'
-import { products, collections } from '@/lib/data'
-import type { Category } from '@/lib/data'
+import { Search, User, Menu, X } from 'lucide-react'
+import { products } from '@/lib/data'
+import ProductsDropdown from '@/components/products-dropdown'
+import CollectionsDropdown from '@/components/collections-dropdown'
 import MobileProductsMenu from '@/components/mobile-products-menu'
 import MobileCollectionsMenu from '@/components/mobile-collections-menu'
 import SearchModal from '@/components/search-modal'
 
-/* ─── Produits inline dropdown ─── */
-function ProduitsNav() {
-  const [open, setOpen] = useState(false)
-  const [categories, setCategories] = useState<Category[]>([])
-  const [hasFetched, setHasFetched] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
-
-  const handleToggle = async (e: React.MouseEvent) => {
-    e.preventDefault()
-    if (!hasFetched) {
-      try {
-        const res = await fetch('/api/categories')
-        const data = await res.json()
-        setCategories(data)
-        setHasFetched(true)
-      } catch {}
-    }
-    setOpen((v) => !v)
-  }
-
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
-    }
-    document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
-  }, [])
-
-  return (
-    <div ref={ref} className="relative">
-      <button
-        onClick={handleToggle}
-        className="flex items-center gap-1.5 font-sans text-[11px] tracking-[0.2em] uppercase text-background/80 hover:text-background transition-colors cursor-pointer"
-      >
-        Produits
-        <ChevronDown size={10} strokeWidth={1.5} className={`transition-transform duration-300 ${open ? 'rotate-180' : ''}`} />
-      </button>
-      <div
-        className={`absolute top-full left-0 mt-3 min-w-[180px] bg-foreground/90 backdrop-blur-sm py-3 transition-all duration-300 z-50 ${
-          open ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'
-        }`}
-      >
-        <Link href="/products" onClick={() => setOpen(false)} className="block px-5 py-2 text-[10px] tracking-[0.2em] uppercase text-background/60 hover:text-background transition-colors">
-          Tous les produits
-        </Link>
-        <div className="my-2 mx-5 h-px bg-background/20" />
-        {categories.map((cat) => (
-          <Link key={cat.id} href={cat.href} onClick={() => setOpen(false)} className="block px-5 py-2 text-[10px] tracking-[0.2em] uppercase text-background/60 hover:text-background transition-colors">
-            {cat.label}
-          </Link>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-/* ─── Collections inline dropdown ─── */
-function CollectionsNav() {
-  const [open, setOpen] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
-    }
-    document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
-  }, [])
-
-  return (
-    <div ref={ref} className="relative">
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-1.5 font-sans text-[11px] tracking-[0.2em] uppercase text-background/80 hover:text-background transition-colors cursor-pointer"
-      >
-        Collections
-        <ChevronDown size={10} strokeWidth={1.5} className={`transition-transform duration-300 ${open ? 'rotate-180' : ''}`} />
-      </button>
-      <div
-        className={`absolute top-full left-0 mt-3 min-w-[200px] bg-foreground/90 backdrop-blur-sm py-3 transition-all duration-300 z-50 ${
-          open ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'
-        }`}
-      >
-        {collections.map((col) => (
-          <Link key={col.id} href={col.href} onClick={() => setOpen(false)} className="block px-5 py-2 text-[10px] tracking-[0.2em] uppercase text-background/60 hover:text-background transition-colors">
-            {col.label}
-          </Link>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-/* ─── Main component ─── */
 export default function HomeHeader2() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -116,9 +23,16 @@ export default function HomeHeader2() {
     return () => clearInterval(interval)
   }, [])
 
+  // Prevent body scroll when mobile menu is open
   useEffect(() => {
-    document.body.style.overflow = mobileMenuOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
   }, [mobileMenuOpen])
 
   const currentProduct = products[currentIndex]
@@ -126,7 +40,6 @@ export default function HomeHeader2() {
   return (
     <>
       <header className="w-full relative h-screen min-h-[600px] overflow-hidden bg-foreground">
-
         {/* Full-height slides */}
         {products.map((product, index) => (
           <div
@@ -148,9 +61,9 @@ export default function HomeHeader2() {
           </div>
         ))}
 
-        {/* ── Logo — centered at top ── */}
-        <div className="absolute top-0 left-0 right-0 z-30 flex justify-center pt-8 md:pt-10 pointer-events-none">
-          <Link href="/accueil-2" className="relative block h-14 md:h-20 w-36 md:w-48 pointer-events-auto">
+        {/* Logo centered at top */}
+        <div className="absolute top-8 left-1/2 -translate-x-1/2 z-30">
+          <Link href="/accueil-2" className="relative block h-14 md:h-20 w-36 md:w-48">
             <Image
               src="/images/logo.png"
               alt="Interloft"
@@ -161,44 +74,32 @@ export default function HomeHeader2() {
           </Link>
         </div>
 
-        {/* ── Icons — top right ── */}
-        <div className="absolute top-8 md:top-10 right-8 md:right-12 z-30 flex items-center gap-5">
-          <button
+        {/* Menu button — top left */}
+        <button
+          onClick={() => setMobileMenuOpen(true)}
+          className="absolute top-8 left-8 z-30 text-background/80 hover:text-background transition-colors cursor-pointer"
+          aria-label="Ouvrir le menu"
+        >
+          <Menu size={24} strokeWidth={1.5} />
+        </button>
+
+        {/* Icons — top right */}
+        <div className="absolute top-8 right-8 md:top-10 md:right-12 z-30 flex items-center gap-5">
+          <button 
             onClick={() => setSearchOpen(true)}
-            aria-label="Rechercher"
+            aria-label="Rechercher" 
             className="text-background/80 hover:text-background transition-colors cursor-pointer"
           >
             <Search size={16} strokeWidth={1.5} />
           </button>
-          <Link
+          <Link 
             href="/compte"
-            aria-label="Compte"
+            aria-label="Compte" 
             className="text-background/80 hover:text-background transition-colors"
           >
             <User size={16} strokeWidth={1.5} />
           </Link>
         </div>
-
-        {/* ── Vertical nav — left side, bottom-anchored (desktop) ── */}
-        <nav className="hidden md:flex flex-col gap-3 absolute left-10 bottom-20 z-30">
-          <Link
-            href="/#introduction"
-            className="font-sans text-[11px] tracking-[0.2em] uppercase text-background/80 hover:text-background transition-colors"
-          >
-            Introduction
-          </Link>
-          <ProduitsNav />
-          <CollectionsNav />
-        </nav>
-
-        {/* Mobile menu button — top left */}
-        <button
-          onClick={() => setMobileMenuOpen(true)}
-          className="md:hidden absolute top-8 left-8 z-30 font-sans text-[11px] tracking-[0.2em] uppercase text-background/80 hover:text-background transition-colors cursor-pointer"
-          aria-label="Ouvrir le menu"
-        >
-          Menu
-        </button>
 
         {/* Product info — bottom left */}
         <div className="absolute bottom-16 md:bottom-20 left-8 md:left-12 z-20">
@@ -210,10 +111,24 @@ export default function HomeHeader2() {
               {currentProduct.name}
             </h2>
             <span className="inline-flex items-center gap-3 font-sans text-[10px] tracking-[0.25em] uppercase text-background/80 group-hover:text-background transition-colors">
-              {"D\u00e9couvrir"}
+              {"\u0044\u00e9couvrir"}
               <span className="w-8 h-px bg-current transition-all group-hover:w-12" />
             </span>
           </Link>
+        </div>
+
+        {/* Progress indicators — bottom right */}
+        <div className="absolute bottom-6 right-8 md:right-12 z-20 flex items-center gap-3">
+          {products.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`h-px transition-all duration-500 ${
+                index === currentIndex ? 'bg-background w-10' : 'bg-background/40 w-6'
+              }`}
+              aria-label={`Slide ${index + 1}`}
+            />
+          ))}
         </div>
 
         {/* Slide counter — bottom left */}
@@ -221,20 +136,6 @@ export default function HomeHeader2() {
           <span className="font-sans text-[10px] tracking-[0.2em] text-background/60">
             {String(currentIndex + 1).padStart(2, '0')} / {String(products.length).padStart(2, '0')}
           </span>
-        </div>
-
-        {/* Slide dots — bottom right */}
-        <div className="absolute bottom-6 right-8 md:right-12 z-20 flex items-center gap-3">
-          {products.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`h-px transition-all duration-500 cursor-pointer ${
-                index === currentIndex ? 'bg-background w-10' : 'bg-background/40 w-6'
-              }`}
-              aria-label={`Slide ${index + 1}`}
-            />
-          ))}
         </div>
       </header>
 
@@ -247,6 +148,7 @@ export default function HomeHeader2() {
           mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
       >
+        {/* Close button */}
         <button
           onClick={() => setMobileMenuOpen(false)}
           className="absolute top-6 right-6 text-foreground/60 hover:text-foreground transition-colors"
@@ -254,16 +156,20 @@ export default function HomeHeader2() {
         >
           <X size={28} strokeWidth={1} />
         </button>
+
         <nav className="flex flex-col items-center gap-8">
           <Link
-            href="/#introduction"
+            href="/about"
             onClick={() => setMobileMenuOpen(false)}
             className="font-serif text-3xl font-light tracking-widest uppercase text-foreground hover:opacity-50 transition-opacity"
           >
-            Introduction
+            {"\u00C0 propos"}
           </Link>
+          
           <MobileProductsMenu onLinkClick={() => setMobileMenuOpen(false)} />
+          
           <MobileCollectionsMenu onLinkClick={() => setMobileMenuOpen(false)} />
+          
           <Link
             href="/collaborations"
             onClick={() => setMobileMenuOpen(false)}
@@ -271,6 +177,7 @@ export default function HomeHeader2() {
           >
             Collaborations
           </Link>
+          
           <Link
             href="/contact"
             onClick={() => setMobileMenuOpen(false)}

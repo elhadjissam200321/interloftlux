@@ -69,7 +69,7 @@ export default function Navbar() {
                 scrolled ? 'text-foreground' : 'text-background'
               }`}
             >
-              À propos
+              Introduction
             </Link>
             
             <ProductsDropdown variant={scrolled ? 'dark' : 'light'} />
@@ -156,7 +156,7 @@ export default function Navbar() {
             onClick={() => setMenuOpen(false)}
             className="font-serif text-3xl font-light tracking-widest uppercase text-foreground hover:opacity-50 transition-opacity"
           >
-            À propos
+            Introduction
           </Link>
           
           <MobileProductsMenu onLinkClick={() => setMenuOpen(false)} />

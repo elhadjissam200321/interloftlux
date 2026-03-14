@@ -163,13 +163,25 @@ export default function HomeHeader2() {
             {/* Left: vertical nav (desktop) / Menu button (mobile) */}
             <nav className="hidden md:flex flex-col gap-4">
               <Link
-                href="/#introduction"
+                href="/about"
                 className="font-sans text-[11px] tracking-[0.2em] uppercase text-background/80 hover:text-background transition-colors"
               >
                 Introduction
               </Link>
               <ProduitsNav />
               <CollectionsNav />
+              <Link
+                href="/collaborations"
+                className="font-sans text-[11px] tracking-[0.2em] uppercase text-background/80 hover:text-background transition-colors"
+              >
+                Collaborations
+              </Link>
+              <Link
+                href="/contact"
+                className="font-sans text-[11px] tracking-[0.2em] uppercase text-background/80 hover:text-background transition-colors"
+              >
+                Contact
+              </Link>
             </nav>
 
             <button
@@ -225,7 +237,7 @@ export default function HomeHeader2() {
         </button>
         <nav className="flex flex-col items-center gap-8">
           <Link
-            href="/#introduction"
+            href="/about"
             onClick={() => setMobileMenuOpen(false)}
             className="font-serif text-3xl font-light tracking-widest uppercase text-foreground hover:opacity-50 transition-opacity"
           >
@@ -244,6 +256,20 @@ export default function HomeHeader2() {
             className="font-serif text-3xl font-light tracking-widest uppercase text-foreground hover:opacity-50 transition-opacity"
           >
             Collections
+          </Link>
+          <Link
+            href="/collaborations"
+            onClick={() => setMobileMenuOpen(false)}
+            className="font-serif text-3xl font-light tracking-widest uppercase text-foreground hover:opacity-50 transition-opacity"
+          >
+            Collaborations
+          </Link>
+          <Link
+            href="/contact"
+            onClick={() => setMobileMenuOpen(false)}
+            className="font-serif text-3xl font-light tracking-widest uppercase text-foreground hover:opacity-50 transition-opacity"
+          >
+            Contact
           </Link>
         </nav>
       </div>

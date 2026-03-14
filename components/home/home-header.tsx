@@ -111,7 +111,7 @@ export default function HomeHeader() {
             onClick={() => setMobileMenuOpen(false)}
             className="font-serif text-3xl font-light tracking-widest uppercase text-foreground hover:opacity-50 transition-opacity"
           >
-            {"\u00C0 propos"}
+            Introduction
           </Link>
           
           <MobileProductsMenu onLinkClick={() => setMobileMenuOpen(false)} />

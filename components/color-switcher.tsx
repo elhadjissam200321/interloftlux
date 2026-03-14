@@ -71,59 +71,12 @@ const DEFAULT_HEX = '#D9CFBF' // Greige Standard
 
 function applyColorTheme(backgroundHex: string) {
   const root = document.documentElement
-  const lightness = hexLightness(backgroundHex)
-  const isDark = lightness < 0.25
-
-  // Background & card
+  // Only change the background color, keep everything else the same
   root.style.setProperty('--background', `color-mix(in srgb, ${backgroundHex} 100%, transparent)`)
-  root.style.setProperty('--card', `color-mix(in srgb, ${lightenHex(backgroundHex, 0.03)} 100%, transparent)`)
-  root.style.setProperty('--popover', `color-mix(in srgb, ${lightenHex(backgroundHex, 0.03)} 100%, transparent)`)
-  root.style.setProperty('--sidebar', `color-mix(in srgb, ${lightenHex(backgroundHex, 0.03)} 100%, transparent)`)
-
-  // Foreground (contrast)
-  const fgHex = isDark ? '#F8F5F0' : '#1A1510'
-  root.style.setProperty('--foreground', `color-mix(in srgb, ${fgHex} 100%, transparent)`)
-  root.style.setProperty('--card-foreground', `color-mix(in srgb, ${fgHex} 100%, transparent)`)
-  root.style.setProperty('--popover-foreground', `color-mix(in srgb, ${fgHex} 100%, transparent)`)
-  root.style.setProperty('--sidebar-foreground', `color-mix(in srgb, ${fgHex} 100%, transparent)`)
-
-  // Primary = foreground colour
-  root.style.setProperty('--primary', `color-mix(in srgb, ${fgHex} 100%, transparent)`)
-  root.style.setProperty('--primary-foreground', `color-mix(in srgb, ${backgroundHex} 100%, transparent)`)
-
-  // Secondary / muted / accent = slight darkening of bg
-  const secondary = darkenHex(backgroundHex, 0.06)
-  const accent = darkenHex(backgroundHex, 0.12)
-  const border = darkenHex(backgroundHex, 0.10)
-  const mutedFg = isDark ? lightenHex(backgroundHex, 0.35) : darkenHex(backgroundHex, 0.35)
-
-  root.style.setProperty('--secondary', `color-mix(in srgb, ${secondary} 100%, transparent)`)
-  root.style.setProperty('--secondary-foreground', `color-mix(in srgb, ${fgHex} 100%, transparent)`)
-  root.style.setProperty('--muted', `color-mix(in srgb, ${secondary} 100%, transparent)`)
-  root.style.setProperty('--muted-foreground', `color-mix(in srgb, ${mutedFg} 100%, transparent)`)
-  root.style.setProperty('--accent', `color-mix(in srgb, ${accent} 100%, transparent)`)
-  root.style.setProperty('--accent-foreground', `color-mix(in srgb, ${fgHex} 100%, transparent)`)
-  root.style.setProperty('--border', `color-mix(in srgb, ${border} 100%, transparent)`)
-  root.style.setProperty('--input', `color-mix(in srgb, ${border} 100%, transparent)`)
-  root.style.setProperty('--ring', `color-mix(in srgb, ${mutedFg} 100%, transparent)`)
-  root.style.setProperty('--sidebar-border', `color-mix(in srgb, ${border} 100%, transparent)`)
-  root.style.setProperty('--sidebar-accent', `color-mix(in srgb, ${secondary} 100%, transparent)`)
-  root.style.setProperty('--sidebar-accent-foreground', `color-mix(in srgb, ${fgHex} 100%, transparent)`)
-  root.style.setProperty('--sidebar-primary', `color-mix(in srgb, ${fgHex} 100%, transparent)`)
-  root.style.setProperty('--sidebar-primary-foreground', `color-mix(in srgb, ${backgroundHex} 100%, transparent)`)
-  root.style.setProperty('--sidebar-ring', `color-mix(in srgb, ${mutedFg} 100%, transparent)`)
 }
 
 function resetColorTheme() {
-  const properties = [
-    '--background','--card','--popover','--sidebar','--foreground',
-    '--card-foreground','--popover-foreground','--sidebar-foreground',
-    '--primary','--primary-foreground','--secondary','--secondary-foreground',
-    '--muted','--muted-foreground','--accent','--accent-foreground',
-    '--border','--input','--ring','--sidebar-border','--sidebar-accent',
-    '--sidebar-accent-foreground','--sidebar-primary','--sidebar-primary-foreground','--sidebar-ring',
-  ]
-  properties.forEach(p => document.documentElement.style.removeProperty(p))
+  document.documentElement.style.removeProperty('--background')
 }
 
 function isValidHex(hex: string): boolean {

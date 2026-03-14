@@ -43,7 +43,10 @@ export default function FooterV2({ overlay = false }: FooterV2Props) {
   }
 
   return (
-    <footer className={overlay ? 'w-full' : 'w-full border-t border-foreground/8 bg-background'}>
+    <footer
+      className={overlay ? 'w-full' : 'w-full border-t border-foreground/8'}
+      style={!overlay ? { backgroundColor: 'var(--color-footer-bg)' } : undefined}
+    >
 
       {overlay && <div className={`w-full border-t ${divider}`} />}
 

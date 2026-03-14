@@ -31,6 +31,11 @@
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
   --radius: 0rem;
+
+  /* ── Color Switcher zones ── */
+  --color-navbar:       var(--background);
+  --color-mobile-menu:  var(--background);
+  --color-footer-bg:    var(--background);
   --sidebar: oklch(0.975 0.005 80);
   --sidebar-foreground: oklch(0.12 0 0);
   --sidebar-primary: oklch(0.12 0 0);

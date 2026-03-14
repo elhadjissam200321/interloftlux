@@ -46,8 +46,9 @@ export default function Navbar() {
       
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? 'bg-background/95 backdrop-blur-sm border-b border-border' : 'bg-transparent'
+          scrolled ? 'backdrop-blur-sm border-b border-border' : 'bg-transparent'
         }`}
+        style={scrolled ? { backgroundColor: 'var(--color-navbar)' } : undefined}
       >
         <div className="flex items-center justify-between px-6 md:px-12 h-16">
           {/* Logo */}
@@ -146,9 +147,10 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed inset-0 z-40 bg-background flex flex-col justify-center items-center transition-all duration-500 ${
+        className={`fixed inset-0 z-40 flex flex-col justify-center items-center transition-all duration-500 ${
           menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
+        style={{ backgroundColor: 'var(--color-mobile-menu)' }}
       >
         <nav className="flex flex-col items-center gap-8">
           <Link

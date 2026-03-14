@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '@/components/navbar'
-import Footer from '@/components/footer'
+import FooterV2 from '@/components/footer-v2'
 
 export const metadata = {
   title: 'Points de Vente — INTERloft',
@@ -106,7 +106,7 @@ export default function PointsDeVentePage() {
         </Link>
       </div>
 
-      <Footer />
+      <FooterV2 />
     </div>
   )
 }

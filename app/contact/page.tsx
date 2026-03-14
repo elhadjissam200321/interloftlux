@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Navbar from '@/components/navbar'
-import Footer from '@/components/footer'
+import FooterV2 from '@/components/footer-v2'
 
 export default function ContactPage() {
   const [form, setForm] = useState({ nom: '', email: '', message: '' })
@@ -154,7 +154,7 @@ export default function ContactPage() {
         </div>
       </div>
 
-      <Footer />
+      <FooterV2 />
     </div>
   )
 }

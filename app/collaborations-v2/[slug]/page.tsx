@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Navbar from '@/components/navbar'
-import Footer from '@/components/footer'
+import FooterV2 from '@/components/footer-v2'
 import { getCollaboratorBySlug, getOtherCollaborators, collaborators } from '@/lib/collaborators-data'
 
 type Params = Promise<{ slug: string }>
@@ -252,7 +252,7 @@ export default async function CollaboratorPage({ params }: { params: Params }) {
         </div>
       </section>
 
-      <Footer />
+      <FooterV2 />
     </main>
   )
 }

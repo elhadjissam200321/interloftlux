@@ -10,6 +10,7 @@ import CollectionsDropdown from '@/components/collections-dropdown'
 import MobileProductsMenu from '@/components/mobile-products-menu'
 import MobileCollectionsMenu from '@/components/mobile-collections-menu'
 import SearchModal from '@/components/search-modal'
+import FooterV2 from '@/components/footer-v2'
 
 export default function HomeHeader() {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -131,11 +132,9 @@ export default function HomeHeader() {
           ))}
         </div>
 
-        {/* Slide counter — bottom left */}
-        <div className="absolute bottom-6 left-8 md:left-12 z-20">
-          <span className="font-sans text-[10px] tracking-[0.2em] text-background/60">
-            {String(currentIndex + 1).padStart(2, '0')} / {String(products.length).padStart(2, '0')}
-          </span>
+        {/* Footer overlay — bottom of hero */}
+        <div className="absolute bottom-0 left-0 right-0 z-20">
+          <FooterV2 overlay />
         </div>
       </header>
 

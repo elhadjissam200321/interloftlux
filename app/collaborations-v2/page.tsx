@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '@/components/navbar'
-import Footer from '@/components/footer'
+import FooterV2 from '@/components/footer-v2'
 import { collaborators } from '@/lib/collaborators-data'
 
 export const metadata: Metadata = {
@@ -112,7 +112,7 @@ export default function CollaborationsV2() {
         </div>
       </section>
 
-      <Footer />
+      <FooterV2 />
     </main>
   )
 }

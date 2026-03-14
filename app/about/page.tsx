@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import Navbar from '@/components/navbar'
-import Footer from '@/components/footer'
+import FooterV2 from '@/components/footer-v2'
 
 export const metadata: Metadata = {
   title: 'À propos | INTERloft',
@@ -39,7 +39,7 @@ export default function About() {
           </div>
         </div>
       </section>
-      <Footer />
+      <FooterV2 />
     </main>
   )
 }

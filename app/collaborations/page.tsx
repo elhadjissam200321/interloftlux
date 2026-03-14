@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import Image from 'next/image'
 import Navbar from '@/components/navbar'
-import Footer from '@/components/footer'
+import FooterV2 from '@/components/footer-v2'
 
 export const metadata: Metadata = {
   title: 'Collaborations | INTERloft',
@@ -124,7 +124,7 @@ export default function Collaborations() {
         </div>
       </section>
 
-      <Footer />
+      <FooterV2 />
     </main>
   )
 }

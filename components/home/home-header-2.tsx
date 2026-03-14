@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { Search, User, X, ChevronDown } from 'lucide-react'
 import { products, collections } from '@/lib/data'
 import SearchModal from '@/components/search-modal'
+import FooterV2 from '@/components/footer-v2'
 
 // ── Inline Produits dropdown (vertical style) ──────────────────────────────
 function ProduitsNav() {
@@ -237,6 +238,11 @@ export default function HomeHeader2() {
               aria-label={`Slide ${index + 1}`}
             />
           ))}
+        </div>
+
+        {/* ── Footer overlay — bottom of hero ── */}
+        <div className="absolute bottom-0 left-0 right-0 z-20">
+          <FooterV2 overlay />
         </div>
       </header>
 

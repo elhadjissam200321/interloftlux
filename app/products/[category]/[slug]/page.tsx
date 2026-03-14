@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Navbar from '@/components/navbar'
-import Footer from '@/components/footer'
+import FooterV2 from '@/components/footer-v2'
 import { products, getCategoryBySlug, getProductBySlug } from '@/lib/data'
 
 export async function generateStaticParams() {
@@ -114,7 +114,7 @@ export default async function ProductPage({
         </div>
       </div>
 
-      <Footer />
+      <FooterV2 />
     </div>
   )
 }

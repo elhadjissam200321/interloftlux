@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '@/components/navbar'
-import Footer from '@/components/footer'
+import FooterV2 from '@/components/footer-v2'
 import { categories } from '@/lib/data'
 
 export const metadata = {
@@ -50,7 +50,7 @@ export default function ProductsPage() {
         </div>
       </div>
 
-      <Footer />
+      <FooterV2 />
     </div>
   )
 }

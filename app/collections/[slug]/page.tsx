@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '@/components/navbar'
-import Footer from '@/components/footer'
+import FooterV2 from '@/components/footer-v2'
 import { collections, getCollectionBySlug, products } from '@/lib/data'
 
 interface CollectionPageProps {
@@ -113,7 +113,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
         </div>
       </section>
 
-      <Footer />
+      <FooterV2 />
     </main>
   )
 }

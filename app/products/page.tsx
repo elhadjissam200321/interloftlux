@@ -5,7 +5,7 @@ import Footer from '@/components/footer'
 import { categories } from '@/lib/data'
 
 export const metadata = {
-  title: 'Produits — INTeloft',
+  title: 'Produits — INTERloft',
   description: 'Découvrez toutes nos collections de mobilier contemporain.',
 }
 

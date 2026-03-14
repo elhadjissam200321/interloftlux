@@ -7,7 +7,7 @@ export default function Footer() {
         {/* Brand */}
         <div className="md:col-span-2">
           <p className="font-serif text-2xl tracking-[0.12em] uppercase font-light text-foreground mb-4">
-            INTeloft
+            INTERloft
           </p>
           <p className="font-sans text-sm leading-relaxed text-muted-foreground max-w-xs">
             Mobilier contemporain pour des intérieurs modernes. Design minimaliste, matériaux de qualité, confort élégant.
@@ -57,7 +57,7 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-border px-6 md:px-12 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <p className="font-sans text-xs text-muted-foreground tracking-widest uppercase">
-          © {new Date().getFullYear()} INTeloft. Tous droits réservés.
+          © {new Date().getFullYear()} INTERloft. Tous droits réservés.
         </p>
         <p className="font-sans text-xs text-muted-foreground tracking-widest uppercase">
           Mobilier Contemporain — Maroc

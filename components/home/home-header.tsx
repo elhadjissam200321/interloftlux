@@ -64,7 +64,7 @@ export default function HomeHeader() {
           <div className="flex-shrink-0 flex items-center justify-center px-6 md:px-10 bg-background">
             <Link href="/" className="relative h-12 md:h-16 w-32 md:w-40">
               <Image
-                src="https://interloft.ma/storage/2026/03/LOGO.png"
+                src="/images/logo.png"
                 alt="Interloft"
                 fill
                 className="object-contain"

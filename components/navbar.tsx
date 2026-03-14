@@ -51,7 +51,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="relative h-10 w-28">
             <Image
-              src="https://interloft.ma/storage/2026/03/LOGO.png"
+              src="/images/logo.png"
               alt="Interloft"
               fill
               className={`object-contain transition-all ${scrolled ? '' : 'brightness-0 invert'}`}

@@ -63,7 +63,7 @@ export default function InscriptionPage() {
       <header className="py-8 px-6 md:px-12 flex justify-center border-b border-border">
         <Link href="/" className="relative h-12 w-32">
           <Image
-            src="https://interloft.ma/storage/2026/03/LOGO.png"
+            src="/images/logo.png"
             alt="Interloft"
             fill
             className="object-contain"

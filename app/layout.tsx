@@ -18,13 +18,13 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'INTeloft — Mobilier Contemporain',
+  title: 'INTERloft — Mobilier Contemporain',
   description:
-    'INTeloft est une marque marocaine dédiée au mobilier contemporain et à l\'aménagement d\'intérieurs modernes.',
+    'INTERloft est une marque marocaine dédiée au mobilier contemporain et à l\'aménagement d\'intérieurs modernes.',
   generator: 'v0.app',
   keywords: ['mobilier', 'contemporain', 'luxe', 'Maroc', 'intérieur', 'design'],
   openGraph: {
-    title: 'INTeloft — Mobilier Contemporain',
+    title: 'INTERloft — Mobilier Contemporain',
     description: 'Collections de mobilier contemporain de luxe.',
     type: 'website',
   },

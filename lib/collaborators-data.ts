@@ -1,0 +1,251 @@
+export interface Project {
+  id: string
+  name: string
+  location: string
+  description: string
+  image: string
+}
+
+export interface FeaturedProject {
+  name: string
+  description: string
+  materialsUsed: string[]
+  image: string
+}
+
+export interface Collaborator {
+  id: string
+  slug: string
+  name: string
+  profession: 'Architecte' | 'Designer d\'Intérieur' | 'Studio de Design'
+  city: string
+  image: string
+  heroImage: string
+  bio: string
+  collaborationStory: string
+  projects: Project[]
+  featuredProject: FeaturedProject
+}
+
+export const collaborators: Collaborator[] = [
+  {
+    id: '1',
+    slug: 'yasmine-bennani',
+    name: 'Yasmine Bennani',
+    profession: 'Architecte',
+    city: 'Casablanca',
+    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80',
+    heroImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&q=80',
+    bio: 'Yasmine Bennani est une architecte primée basée à Casablanca, reconnue pour son approche qui marie harmonieusement l\'architecture contemporaine aux influences traditionnelles marocaines. Son travail se distingue par une attention particulière aux matériaux naturels et à la lumière.',
+    collaborationStory: 'Notre collaboration avec Yasmine a débuté en 2019 lors de la conception d\'une villa privée à Anfa. Depuis, nous avons travaillé ensemble sur plus de quinze projets résidentiels et commerciaux, développant une compréhension mutuelle profonde de nos philosophies respectives. Chaque projet est une conversation entre l\'architecture et le mobilier, où chaque pièce trouve sa place naturelle dans l\'espace.',
+    projects: [
+      {
+        id: 'p1',
+        name: 'Villa Anfa',
+        location: 'Casablanca',
+        description: 'Résidence privée de 800m² intégrant mobilier sur mesure et architecture organique.',
+        image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80'
+      },
+      {
+        id: 'p2',
+        name: 'Riad Contemporain',
+        location: 'Marrakech',
+        description: 'Rénovation complète d\'un riad traditionnel avec une vision moderne.',
+        image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80'
+      },
+      {
+        id: 'p3',
+        name: 'Appartement Gauthier',
+        location: 'Casablanca',
+        description: 'Penthouse minimaliste avec vue panoramique sur l\'océan.',
+        image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80'
+      }
+    ],
+    featuredProject: {
+      name: 'Villa Anfa',
+      description: 'Ce projet emblématique représente l\'essence de notre collaboration. Chaque meuble a été conçu en dialogue avec l\'architecture, créant des espaces où le mobilier semble avoir toujours existé. Les lignes épurées du salon s\'harmonisent parfaitement avec les volumes généreux de la villa.',
+      materialsUsed: ['Noyer américain', 'Travertin', 'Laiton brossé', 'Lin naturel'],
+      image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1600&q=80'
+    }
+  },
+  {
+    id: '2',
+    slug: 'karim-alami',
+    name: 'Karim Alami',
+    profession: 'Designer d\'Intérieur',
+    city: 'Marrakech',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80',
+    heroImage: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1600&q=80',
+    bio: 'Karim Alami apporte une sensibilité unique au design d\'intérieur marocain, fusionnant l\'artisanat local avec une esthétique internationale. Son portfolio inclut des résidences privées, des hôtels boutique et des espaces commerciaux à travers le Maroc.',
+    collaborationStory: 'Karim est venu vers nous avec une vision claire : créer des intérieurs qui racontent une histoire. Notre première collaboration remonte à 2020 pour un riad-boutique à la médina de Marrakech. Depuis, nous avons développé ensemble une gamme de mobilier exclusif qui célèbre l\'artisanat marocain tout en répondant aux exigences du confort contemporain.',
+    projects: [
+      {
+        id: 'p4',
+        name: 'Riad Jardin Secret',
+        location: 'Marrakech',
+        description: 'Boutique-hôtel de 12 suites dans la médina historique.',
+        image: 'https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=800&q=80'
+      },
+      {
+        id: 'p5',
+        name: 'Villa Palmeraie',
+        location: 'Marrakech',
+        description: 'Résidence de luxe de 1200m² avec jardins paysagers.',
+        image: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80'
+      }
+    ],
+    featuredProject: {
+      name: 'Riad Jardin Secret',
+      description: 'Ce projet a été une exploration des possibilités entre tradition et modernité. Nous avons créé des pièces uniques qui s\'intègrent naturellement dans l\'architecture centenaire du riad tout en offrant le confort attendu par une clientèle internationale.',
+      materialsUsed: ['Cèdre du Maroc', 'Zellige artisanal', 'Cuir tanné naturellement', 'Laiton antique'],
+      image: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=1600&q=80'
+    }
+  },
+  {
+    id: '3',
+    slug: 'studio-nour',
+    name: 'Studio Nour',
+    profession: 'Studio de Design',
+    city: 'Rabat',
+    image: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80',
+    heroImage: 'https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=1600&q=80',
+    bio: 'Studio Nour est un collectif de designers basé à Rabat, fondé par Sara Tazi et Omar Fassi. Le studio est reconnu pour son approche multidisciplinaire, combinant architecture d\'intérieur, design de mobilier et direction artistique.',
+    collaborationStory: 'Notre partenariat avec Studio Nour a commencé par un projet ambitieux : concevoir l\'intégralité du mobilier pour un nouveau concept de restaurant à Rabat. Cette collaboration intense a révélé une compatibilité créative exceptionnelle, donnant naissance à une série de projets qui repoussent les limites du design marocain contemporain.',
+    projects: [
+      {
+        id: 'p6',
+        name: 'Restaurant Terrasse',
+        location: 'Rabat',
+        description: 'Restaurant gastronomique avec vue sur la mer.',
+        image: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=800&q=80'
+      },
+      {
+        id: 'p7',
+        name: 'Concept Store Océan',
+        location: 'Casablanca',
+        description: 'Espace retail expérientiel de 400m².',
+        image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80'
+      },
+      {
+        id: 'p8',
+        name: 'Bureaux Agdal',
+        location: 'Rabat',
+        description: 'Aménagement d\'un espace de coworking créatif.',
+        image: 'https://images.unsplash.com/photo-1600494603989-9650cf6ddd3d?w=800&q=80'
+      }
+    ],
+    featuredProject: {
+      name: 'Restaurant Terrasse',
+      description: 'Ce restaurant est devenu une référence pour le design d\'intérieur à Rabat. Chaque élément de mobilier a été pensé pour compléter l\'expérience culinaire, des tables en chêne massif aux assises en cuir pleine fleur, créant une atmosphère à la fois sophistiquée et accueillante.',
+      materialsUsed: ['Chêne européen', 'Cuir pleine fleur', 'Acier patiné', 'Marbre local'],
+      image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1600&q=80'
+    }
+  },
+  {
+    id: '4',
+    slug: 'leila-chraibi',
+    name: 'Leila Chraibi',
+    profession: 'Architecte',
+    city: 'Tanger',
+    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=800&q=80',
+    heroImage: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1600&q=80',
+    bio: 'Leila Chraibi pratique une architecture sensible au contexte, profondément ancrée dans le patrimoine tangérois. Ses projets témoignent d\'un respect pour l\'histoire tout en embrassant pleinement la contemporanéité.',
+    collaborationStory: 'Notre relation avec Leila s\'est construite autour d\'un projet de réhabilitation d\'une maison de maître dans la kasbah de Tanger. Ce défi complexe a nécessité une approche sur mesure, développant ensemble des solutions uniques qui respectent l\'authenticité du lieu tout en l\'adaptant à un mode de vie moderne.',
+    projects: [
+      {
+        id: 'p9',
+        name: 'Maison Kasbah',
+        location: 'Tanger',
+        description: 'Réhabilitation d\'une demeure historique du XVIIIe siècle.',
+        image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80'
+      },
+      {
+        id: 'p10',
+        name: 'Villa Cap Spartel',
+        location: 'Tanger',
+        description: 'Villa contemporaine face au détroit de Gibraltar.',
+        image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80'
+      }
+    ],
+    featuredProject: {
+      name: 'Maison Kasbah',
+      description: 'Ce projet illustre parfaitement notre philosophie : le mobilier doit s\'effacer pour mettre en valeur l\'architecture. Nous avons créé des pièces intemporelles qui dialoguent avec les murs centenaires, les sols en zellige d\'origine et les plafonds en bois sculpté.',
+      materialsUsed: ['Thuya marocain', 'Fer forgé', 'Tissu berbère', 'Pierre locale'],
+      image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1600&q=80'
+    }
+  },
+  {
+    id: '5',
+    slug: 'mehdi-tahiri',
+    name: 'Mehdi Tahiri',
+    profession: 'Designer d\'Intérieur',
+    city: 'Casablanca',
+    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=800&q=80',
+    heroImage: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600&q=80',
+    bio: 'Mehdi Tahiri est reconnu pour son approche minimaliste et son sens aigu des proportions. Formé à Milan, il apporte une perspective internationale à ses projets tout en restant fidèle à l\'essence du design marocain.',
+    collaborationStory: 'Mehdi nous a approchés avec une commande inhabituelle : créer une collection capsule inspirée des lignes de l\'architecture Art Déco casablancaise. Cette collaboration a donné naissance à notre ligne "Boulevard", aujourd\'hui l\'une de nos plus demandées.',
+    projects: [
+      {
+        id: 'p11',
+        name: 'Appartement Art Déco',
+        location: 'Casablanca',
+        description: 'Rénovation d\'un appartement des années 1930.',
+        image: 'https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=800&q=80'
+      },
+      {
+        id: 'p12',
+        name: 'Loft Industriel',
+        location: 'Casablanca',
+        description: 'Conversion d\'un ancien entrepôt en résidence de luxe.',
+        image: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80'
+      }
+    ],
+    featuredProject: {
+      name: 'Appartement Art Déco',
+      description: 'Ce projet a été une plongée dans l\'histoire architecturale de Casablanca. Chaque meuble de la collection Boulevard fait écho aux motifs géométriques et aux courbes élégantes de l\'Art Déco, créant un ensemble cohérent qui honore le patrimoine du bâtiment.',
+      materialsUsed: ['Palissandre', 'Laque brillante', 'Velours', 'Chrome poli'],
+      image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1600&q=80'
+    }
+  },
+  {
+    id: '6',
+    slug: 'atelier-mina',
+    name: 'Atelier Mina',
+    profession: 'Studio de Design',
+    city: 'Fès',
+    image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80',
+    heroImage: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1600&q=80',
+    bio: 'Atelier Mina, fondé par Mina El Glaoui, est un studio de design spécialisé dans la réinterprétation des arts décoratifs marocains. Basé dans la médina de Fès, le studio collabore étroitement avec les artisans locaux.',
+    collaborationStory: 'Notre partenariat avec Atelier Mina est né d\'une passion commune pour l\'artisanat fassi. Ensemble, nous avons développé une approche unique qui intègre les techniques ancestrales du zellige, de la marqueterie et du travail du cuir dans des designs résolument contemporains.',
+    projects: [
+      {
+        id: 'p13',
+        name: 'Riad des Arts',
+        location: 'Fès',
+        description: 'Transformation d\'un riad en galerie d\'art et résidence.',
+        image: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=800&q=80'
+      },
+      {
+        id: 'p14',
+        name: 'Boutique Artisanale',
+        location: 'Fès',
+        description: 'Concept store célébrant l\'artisanat marocain.',
+        image: 'https://images.unsplash.com/photo-1600494603989-9650cf6ddd3d?w=800&q=80'
+      }
+    ],
+    featuredProject: {
+      name: 'Riad des Arts',
+      description: 'Ce riad est devenu un laboratoire d\'expérimentation où tradition et innovation se rencontrent. Les meubles que nous avons créés intègrent des techniques artisanales millénaires dans des formes contemporaines, créant des pièces uniques qui sont autant des œuvres d\'art que des objets fonctionnels.',
+      materialsUsed: ['Cèdre sculpté', 'Zellige de Fès', 'Cuir fassi', 'Laiton ciselé'],
+      image: 'https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=1600&q=80'
+    }
+  }
+]
+
+export function getCollaboratorBySlug(slug: string): Collaborator | undefined {
+  return collaborators.find(c => c.slug === slug)
+}
+
+export function getOtherCollaborators(currentSlug: string, limit: number = 3): Collaborator[] {
+  return collaborators.filter(c => c.slug !== currentSlug).slice(0, limit)
+}

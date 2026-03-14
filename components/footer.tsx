@@ -23,8 +23,10 @@ export default function Footer() {
               { label: 'Produits', href: '/products' },
               { label: 'Collections', href: '/collections/beldi' },
               { label: 'Collaborations', href: '/collaborations' },
+              { label: 'Collaborations V2', href: '/collaborations-v2' },
               { label: 'Contact', href: '/contact' },
               { label: 'Accueil 2', href: '/accueil-2' },
+              { label: 'Accueil 3', href: '/accueil-3' },
             ].map((link) => (
               <Link
                 key={link.href}

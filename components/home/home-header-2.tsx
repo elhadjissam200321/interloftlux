@@ -98,9 +98,9 @@ interface HomeHeader2Props {
 }
 
 export default function HomeHeader2({
-  initialProducts,
-  initialCategories,
-  initialCollections,
+  initialProducts = [],
+  initialCategories = [],
+  initialCollections = [],
   pageContent
 }: HomeHeader2Props) {
   const content = pageContent?.content || {}

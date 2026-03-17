@@ -14,15 +14,15 @@ export default function FooterV2({ overlay = false }: FooterV2Props) {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const base = overlay
-    ? 'text-background/55 hover:text-background transition-colors'
+    ? 'text-background/90 hover:text-background transition-colors'
     : 'text-foreground/45 hover:text-foreground transition-colors'
 
   const label = overlay
-    ? 'text-[9px] tracking-[0.3em] uppercase font-sans text-background/30 mb-4 block'
+    ? 'text-[9px] tracking-[0.3em] uppercase font-sans text-background/60 mb-4 block'
     : 'text-[9px] tracking-[0.3em] uppercase font-sans text-foreground/25 mb-4 block'
 
   const divider = overlay ? 'border-background/10' : 'border-foreground/10'
-  const muted = overlay ? 'text-background/40' : 'text-foreground/30'
+  const muted = overlay ? 'text-background/70' : 'text-foreground/30'
   const inputColor = overlay
     ? 'bg-transparent text-background placeholder-background/30 border-background/20 focus:border-background/60'
     : 'bg-transparent text-foreground placeholder-foreground/30 border-foreground/20 focus:border-foreground/60'
@@ -52,9 +52,8 @@ export default function FooterV2({ overlay = false }: FooterV2Props) {
 
       {/* Newsletter expand panel — Studio27 style */}
       <div
-        className={`overflow-hidden transition-all duration-500 ease-in-out ${
-          newsletterOpen ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
-        }`}
+        className={`overflow-hidden transition-all duration-500 ease-in-out ${newsletterOpen ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
+          }`}
       >
         <div className={`px-8 md:px-12 lg:px-16 py-7 border-b ${overlayPanelBg}`}>
           <div className="flex flex-col items-end gap-5">

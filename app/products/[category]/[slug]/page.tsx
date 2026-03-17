@@ -3,9 +3,10 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Navbar from '@/components/navbar'
 import FooterV2 from '@/components/footer-v2'
-import { products, getCategoryBySlug, getProductBySlug } from '@/lib/data'
+import { getProductBySlug, getCategoryBySlug, getProducts } from '@/lib/supabase/queries'
 
 export async function generateStaticParams() {
+  const products = await getProducts()
   return products.map((p) => ({
     category: p.category,
     slug: p.slug,
@@ -18,7 +19,7 @@ export async function generateMetadata({
   params: Promise<{ category: string; slug: string }>
 }) {
   const { slug } = await params
-  const product = getProductBySlug(slug)
+  const product = await getProductBySlug(slug)
   if (!product) return { title: 'INTERloft' }
   return {
     title: `${product.name} — INTERloft`,
@@ -32,8 +33,8 @@ export default async function ProductPage({
   params: Promise<{ category: string; slug: string }>
 }) {
   const { category: categorySlug, slug } = await params
-  const product = getProductBySlug(slug)
-  const category = getCategoryBySlug(categorySlug)
+  const product = await getProductBySlug(slug)
+  const category = await getCategoryBySlug(categorySlug)
 
   if (!product || !category) notFound()
 
@@ -61,7 +62,7 @@ export default async function ProductPage({
         <div className="lg:w-1/3 px-6 md:px-12 lg:px-10 py-12 lg:py-16 flex flex-col">
           <div className="flex-1">
             {/* Back link */}
-            <Link 
+            <Link
               href={`/products/${category.id}`}
               className="inline-block font-sans text-xs tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground transition-colors mb-12"
             >
@@ -85,7 +86,7 @@ export default async function ProductPage({
                   Matériaux
                 </p>
                 <ul className="space-y-1">
-                  {product.materials.map((m, i) => (
+                  {product.materials?.map((m: string, i: number) => (
                     <li key={i} className="font-sans text-sm text-foreground">
                       {m}
                     </li>

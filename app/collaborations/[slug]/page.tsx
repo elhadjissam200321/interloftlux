@@ -4,11 +4,12 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Navbar from '@/components/navbar'
 import FooterV2 from '@/components/footer-v2'
-import { getCollaboratorBySlug, getOtherCollaborators, collaborators } from '@/lib/collaborators-data'
+import { getCollaboratorBySlug, getOtherCollaborators, getCollaborators } from '@/lib/supabase/queries'
 
 type Params = Promise<{ slug: string }>
 
 export async function generateStaticParams() {
+  const collaborators = await getCollaborators()
   return collaborators.map((collaborator) => ({
     slug: collaborator.slug,
   }))
@@ -16,8 +17,8 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { slug } = await params
-  const collaborator = getCollaboratorBySlug(slug)
-  
+  const collaborator = await getCollaboratorBySlug(slug)
+
   if (!collaborator) {
     return {
       title: 'Collaborateur non trouvé | INTERloft',
@@ -26,28 +27,28 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 
   return {
     title: `${collaborator.name} | Collaborations INTERloft`,
-    description: collaborator.bio,
+    description: collaborator.description,
   }
 }
 
 export default async function CollaboratorPage({ params }: { params: Params }) {
   const { slug } = await params
-  const collaborator = getCollaboratorBySlug(slug)
+  const collaborator = await getCollaboratorBySlug(slug)
 
   if (!collaborator) {
     notFound()
   }
 
-  const otherCollaborators = getOtherCollaborators(slug, 3)
+  const otherCollaborators = await getOtherCollaborators(slug, 3)
 
   return (
     <main>
       <Navbar />
-      
+
       {/* Hero Section */}
       <section className="relative w-full h-[60vh] min-h-[450px]">
         <Image
-          src={collaborator.heroImage}
+          src={collaborator.hero_image || collaborator.image}
           alt={collaborator.name}
           fill
           className="object-cover"
@@ -82,16 +83,23 @@ export default async function CollaboratorPage({ params }: { params: Params }) {
                 className="object-cover"
               />
             </div>
-            
+
             {/* Bio */}
             <div>
               <p className="label-text mb-6">À PROPOS</p>
               <h2 className="font-serif text-3xl md:text-4xl font-light tracking-wide text-foreground mb-8">
                 {collaborator.name}
               </h2>
-              <p className="text-sm md:text-base leading-relaxed text-muted-foreground">
-                {collaborator.bio}
+              <p className="text-sm md:text-base leading-relaxed text-muted-foreground mb-8">
+                {collaborator.description}
               </p>
+              <Link
+                href={`/contact?subject=Collaboration - ${collaborator.name}&message=Bonjour, je souhaiterais en savoir plus sur les réalisations de ${collaborator.name} avec INTERloft.`}
+                className="inline-flex items-center gap-3 font-sans text-xs tracking-[0.2em] uppercase text-foreground hover:opacity-60 transition-opacity pt-4"
+              >
+                Nous contacter
+                <span className="w-6 h-px bg-current transition-all group-hover:w-10" />
+              </Link>
             </div>
           </div>
         </div>
@@ -105,7 +113,7 @@ export default async function CollaboratorPage({ params }: { params: Params }) {
             L'histoire d'un partenariat
           </h2>
           <p className="text-sm md:text-base leading-relaxed text-muted-foreground text-center">
-            {collaborator.collaborationStory}
+            {collaborator.collaboration_story}
           </p>
         </div>
       </section>
@@ -119,10 +127,10 @@ export default async function CollaboratorPage({ params }: { params: Params }) {
               Nos réalisations communes
             </h2>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {collaborator.projects.map((project) => (
-              <article key={project.id} className="group">
+            {collaborator.projects?.map((project: any) => (
+              <article key={project.id || project.title} className="group">
                 <div className="relative aspect-[4/3] mb-5 overflow-hidden bg-muted">
                   <Image
                     src={project.image}
@@ -132,7 +140,7 @@ export default async function CollaboratorPage({ params }: { params: Params }) {
                   />
                 </div>
                 <h3 className="font-serif text-xl md:text-2xl font-light tracking-wide text-foreground mb-2">
-                  {project.name}
+                  {project.name || project.title}
                 </h3>
                 <p className="text-xs tracking-[0.15em] uppercase text-muted-foreground mb-3">
                   {project.location}
@@ -152,32 +160,31 @@ export default async function CollaboratorPage({ params }: { params: Params }) {
           {/* Image */}
           <div className="relative aspect-square lg:aspect-auto lg:min-h-[600px]">
             <Image
-              src={collaborator.featuredProject.image}
-              alt={collaborator.featuredProject.name}
+              src={collaborator.featured_project?.image}
+              alt={collaborator.featured_project?.name}
               fill
               className="object-cover"
             />
           </div>
-          
+
           {/* Content */}
           <div className="flex items-center py-16 md:py-20 px-8 md:px-16 lg:px-20">
             <div>
-              <p className="label-text mb-4">PROJET PHARE</p>
               <h2 className="font-serif text-3xl md:text-4xl font-light tracking-wide text-foreground mb-6">
-                {collaborator.featuredProject.name}
+                {collaborator.featured_project?.name}
               </h2>
               <p className="text-sm md:text-base leading-relaxed text-muted-foreground mb-8">
-                {collaborator.featuredProject.description}
+                {collaborator.featured_project?.description}
               </p>
-              
+
               {/* Materials Used */}
               <div>
                 <p className="text-xs tracking-[0.15em] uppercase text-foreground mb-4">
                   Matériaux utilisés
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  {collaborator.featuredProject.materialsUsed.map((material, index) => (
-                    <span 
+                  {collaborator.expertise?.map((material: string, index: number) => (
+                    <span
                       key={index}
                       className="px-4 py-2 text-xs tracking-wider uppercase bg-background text-foreground border border-border"
                     >
@@ -202,14 +209,14 @@ export default async function CollaboratorPage({ params }: { params: Params }) {
               </h2>
             </div>
             <Link
-              href="/collaborations-v2"
+              href="/collaborations"
               className="inline-flex items-center gap-3 font-sans text-xs tracking-[0.2em] uppercase text-foreground hover:opacity-60 transition-opacity"
             >
               Voir tous les collaborateurs
               <span className="w-6 h-px bg-current" />
             </Link>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {otherCollaborators.map((collab) => (
               <article key={collab.id} className="group">
@@ -227,7 +234,7 @@ export default async function CollaboratorPage({ params }: { params: Params }) {
                 </h3>
                 <p className="text-sm text-muted-foreground mb-3">{collab.city}, Maroc</p>
                 <Link
-                  href={`/collaborations-v2/${collab.slug}`}
+                  href={`/collaborations/${collab.slug}`}
                   className="inline-flex items-center gap-3 font-sans text-xs tracking-[0.2em] uppercase text-foreground hover:opacity-60 transition-opacity"
                 >
                   Voir
@@ -243,7 +250,7 @@ export default async function CollaboratorPage({ params }: { params: Params }) {
       <section className="w-full py-16 md:py-20 px-8 md:px-16 lg:px-24 bg-muted border-t border-border">
         <div className="max-w-3xl mx-auto text-center">
           <Link
-            href="/collaborations-v2"
+            href="/collaborations"
             className="inline-flex items-center gap-3 font-sans text-xs tracking-[0.25em] uppercase text-foreground hover:opacity-60 transition-opacity"
           >
             <span className="w-8 h-px bg-current" />

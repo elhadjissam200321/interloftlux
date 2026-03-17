@@ -37,8 +37,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="fr" className={`${cormorant.variable} ${inter.variable}`} data-scroll-behavior="smooth" style={{ scrollBehavior: 'smooth' }}>
-      <body className="font-sans antialiased bg-background text-foreground">
+    <html lang="fr" className={`${cormorant.variable} ${inter.variable}`} data-scroll-behavior="smooth" style={{ scrollBehavior: 'smooth' }} suppressHydrationWarning>
+      <body className="font-sans antialiased bg-background text-foreground" suppressHydrationWarning>
         <Preloader />
         {children}
         <ColorSwitcher />

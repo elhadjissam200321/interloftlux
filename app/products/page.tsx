@@ -2,14 +2,15 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '@/components/navbar'
 import FooterV2 from '@/components/footer-v2'
-import { categories } from '@/lib/data'
+import { getCategories } from '@/lib/supabase/queries'
 
 export const metadata = {
   title: 'Produits — INTERloft',
   description: 'Découvrez toutes nos collections de mobilier contemporain.',
 }
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const categories = await getCategories()
   return (
     <div className="bg-background min-h-screen">
       <Navbar />
@@ -38,7 +39,7 @@ export default function ProductsPage() {
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
               <div className="absolute inset-0 bg-foreground/20 group-hover:bg-foreground/10 transition-colors duration-500" />
-              
+
               {/* Label */}
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <h2 className="font-serif text-2xl md:text-3xl font-light text-background">

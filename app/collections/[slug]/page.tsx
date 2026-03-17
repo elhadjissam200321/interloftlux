@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '@/components/navbar'
 import FooterV2 from '@/components/footer-v2'
-import { collections, getCollectionBySlug, products } from '@/lib/data'
+import { getCollectionBySlug, getCollections, getProducts } from '@/lib/supabase/queries'
 
 interface CollectionPageProps {
   params: Promise<{ slug: string }>
@@ -12,8 +12,8 @@ interface CollectionPageProps {
 
 export async function generateMetadata({ params }: CollectionPageProps): Promise<Metadata> {
   const { slug } = await params
-  const collection = getCollectionBySlug(slug)
-  
+  const collection = await getCollectionBySlug(slug)
+
   if (!collection) {
     return { title: 'Collection non trouvée | INTERloft' }
   }
@@ -25,6 +25,7 @@ export async function generateMetadata({ params }: CollectionPageProps): Promise
 }
 
 export async function generateStaticParams() {
+  const collections = await getCollections()
   return collections.map((collection) => ({
     slug: collection.id,
   }))
@@ -32,19 +33,22 @@ export async function generateStaticParams() {
 
 export default async function CollectionPage({ params }: CollectionPageProps) {
   const { slug } = await params
-  const collection = getCollectionBySlug(slug)
+  const collection = await getCollectionBySlug(slug)
 
   if (!collection) {
     notFound()
   }
 
   // Get some products to display (in a real app, these would be filtered by collection)
+  const products = await getProducts()
   const displayProducts = products.slice(0, 4)
+
+  const collections = await getCollections()
 
   return (
     <main>
       <Navbar />
-      
+
       {/* Hero Section */}
       <section className="w-full py-24 md:py-32 px-8 md:px-16 lg:px-24 bg-background">
         <div className="max-w-5xl mx-auto">

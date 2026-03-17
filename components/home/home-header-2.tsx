@@ -4,12 +4,11 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Search, User, X, ChevronDown } from 'lucide-react'
-import { products, collections } from '@/lib/data'
 import SearchModal from '@/components/search-modal'
 import FooterV2 from '@/components/footer-v2'
 
 // ── Inline Produits dropdown (vertical style) ──────────────────────────────
-function ProduitsNav() {
+function ProduitsNav({ categories }: { categories: any[] }) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
@@ -21,15 +20,7 @@ function ProduitsNav() {
     return () => document.removeEventListener('mousedown', handleClick)
   }, [])
 
-  const categories = [
-    { label: 'Nouveautés',         href: '/products/nouveautes' },
-    { label: 'Canapés',            href: '/products/canapes' },
-    { label: 'Canapés composables',href: '/products/canapes-composables' },
-    { label: 'Fauteuils',          href: '/products/fauteuils' },
-    { label: 'Lits',               href: '/products/lits' },
-    { label: 'Meubles',            href: '/products/meubles' },
-    { label: 'Tringlerie',         href: '/products/tringlerie' },
-  ]
+  // Uses passed categories prop instead of local hardcoded ones
 
   return (
     <div ref={ref} className="relative">
@@ -59,7 +50,7 @@ function ProduitsNav() {
 }
 
 // ── Inline Collections dropdown (vertical style) ───────────────────────────
-function CollectionsNav() {
+function CollectionsNav({ collections }: { collections: any[] }) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
@@ -99,15 +90,28 @@ function CollectionsNav() {
 }
 
 // ── Main component ─────────────────────────────────────────────────────────
-export default function HomeHeader2() {
+interface HomeHeader2Props {
+  initialProducts: any[]
+  initialCategories: any[]
+  initialCollections: any[]
+  pageContent?: any
+}
+
+export default function HomeHeader2({
+  initialProducts,
+  initialCategories,
+  initialCollections,
+  pageContent
+}: HomeHeader2Props) {
+  const content = pageContent?.content || {}
   const [currentIndex, setCurrentIndex] = useState(0)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % products.length)
-    }, 5000)
+      setCurrentIndex((prev) => (prev + 1) % initialProducts.length)
+    }, 6000)
     return () => clearInterval(interval)
   }, [])
 
@@ -121,12 +125,11 @@ export default function HomeHeader2() {
       <header className="w-full relative h-screen min-h-[600px] overflow-hidden bg-foreground">
 
         {/* ── Full-height slides ── */}
-        {products.map((product, index) => (
+        {initialProducts.map((product, index) => (
           <div
             key={product.id}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-              index === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
-            }`}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
+              }`}
           >
             <Image
               src={product.image}
@@ -146,12 +149,12 @@ export default function HomeHeader2() {
 
           {/* Logo row — centered */}
           <div className="flex justify-center pointer-events-none">
-            <Link href="/accueil-2" className="relative block h-14 md:h-20 w-36 md:w-48 pointer-events-auto">
+            <Link href="/" className="relative block h-[62px] md:h-[88px] w-[158px] md:w-[211px] pointer-events-auto">
               <Image
                 src="/images/logo.png"
                 alt="Interloft"
                 fill
-                className="object-contain brightness-0 invert"
+                className="object-contain"
                 priority
               />
             </Link>
@@ -166,15 +169,15 @@ export default function HomeHeader2() {
                 href="/about"
                 className="font-sans text-[11px] tracking-[0.2em] uppercase text-background/80 hover:text-background transition-colors"
               >
-                Introduction
+                {content.nav_about || 'Introduction'}
               </Link>
-              <ProduitsNav />
-              <CollectionsNav />
+              <ProduitsNav categories={initialCategories} />
+              <CollectionsNav collections={initialCollections} />
               <Link
                 href="/collaborations"
                 className="font-sans text-[11px] tracking-[0.2em] uppercase text-background/80 hover:text-background transition-colors"
               >
-                Collaborations
+                {content.nav_collaborations || 'Collaborations'}
               </Link>
               <Link
                 href="/contact"
@@ -224,9 +227,8 @@ export default function HomeHeader2() {
 
       {/* ── Mobile Menu Overlay ── */}
       <div
-        className={`fixed inset-0 z-50 flex flex-col justify-center items-center transition-all duration-500 ${
-          mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
+        className={`fixed inset-0 z-50 flex flex-col justify-center items-center transition-all duration-500 ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          }`}
         style={{ backgroundColor: 'var(--color-mobile-menu)' }}
       >
         <button

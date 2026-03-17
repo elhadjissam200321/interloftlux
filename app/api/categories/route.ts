@@ -1,9 +1,7 @@
-import { categories } from '@/lib/data'
+import { getCategories } from '@/lib/supabase/queries'
 import { NextResponse } from 'next/server'
 
 export async function GET() {
-  // Simulate network delay for async behavior
-  await new Promise((resolve) => setTimeout(resolve, 100))
-  
+  const categories = await getCategories()
   return NextResponse.json(categories)
 }

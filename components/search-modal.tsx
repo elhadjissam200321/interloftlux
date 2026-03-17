@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Search, X } from 'lucide-react'
-import { products, categories, type Product, type Category } from '@/lib/data'
+import { createClient } from '@/lib/supabase/client'
 
 interface SearchModalProps {
   isOpen: boolean
@@ -14,10 +14,11 @@ interface SearchModalProps {
 
 export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const [query, setQuery] = useState('')
-  const [results, setResults] = useState<{ products: Product[]; categories: Category[] }>({
+  const [results, setResults] = useState<{ products: any[]; categories: any[] }>({
     products: [],
     categories: [],
   })
+  const [popularCategories, setPopularCategories] = useState<any[]>([])
   const inputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
 
@@ -25,12 +26,22 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
   useEffect(() => {
     if (isOpen && inputRef.current) {
       setTimeout(() => inputRef.current?.focus(), 100)
+
+      // Fetch popular categories for the empty state
+      fetchPopularCategories()
     }
     if (!isOpen) {
       setQuery('')
       setResults({ products: [], categories: [] })
     }
   }, [isOpen])
+
+  const fetchPopularCategories = async () => {
+    const supabase = createClient()
+    if (!supabase) return
+    const { data } = await supabase.from('categories').select('*').limit(6)
+    if (data) setPopularCategories(data)
+  }
 
   // Handle escape key
   useEffect(() => {
@@ -48,44 +59,46 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
   }, [isOpen, onClose])
 
   // Search function
-  const handleSearch = (searchQuery: string) => {
+  const handleSearch = async (searchQuery: string) => {
     setQuery(searchQuery)
-    
+
     if (!searchQuery.trim()) {
       setResults({ products: [], categories: [] })
       return
     }
 
+    const supabase = createClient()
+    if (!supabase) return
+
     const normalizedQuery = searchQuery.toLowerCase().trim()
 
-    // Search products
-    const matchedProducts = products.filter(
-      (product) =>
-        product.name.toLowerCase().includes(normalizedQuery) ||
-        product.description.toLowerCase().includes(normalizedQuery) ||
-        product.category.toLowerCase().includes(normalizedQuery) ||
-        product.materials.some((m) => m.toLowerCase().includes(normalizedQuery))
-    )
-
-    // Search categories
-    const matchedCategories = categories.filter((category) =>
-      category.label.toLowerCase().includes(normalizedQuery)
-    )
+    // Search products and categories in parallel
+    const [productsResult, categoriesResult] = await Promise.all([
+      supabase
+        .from('products')
+        .select('*')
+        .or(`name.ilike.%${normalizedQuery}%,description.ilike.%${normalizedQuery}%,category.ilike.%${normalizedQuery}%`)
+        .limit(6),
+      supabase
+        .from('categories')
+        .select('*')
+        .ilike('label', `%${normalizedQuery}%`)
+    ])
 
     setResults({
-      products: matchedProducts.slice(0, 6),
-      categories: matchedCategories,
+      products: productsResult.data || [],
+      categories: categoriesResult.data || [],
     })
   }
 
-  const handleProductClick = (product: Product) => {
+  const handleProductClick = (product: any) => {
     onClose()
     router.push(`/products/${product.category}/${product.slug}`)
   }
 
-  const handleCategoryClick = (category: Category) => {
+  const handleCategoryClick = (category: any) => {
     onClose()
-    router.push(category.href)
+    router.push(`/products/${category.id}`)
   }
 
   const hasResults = results.products.length > 0 || results.categories.length > 0
@@ -193,10 +206,10 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                 Collections populaires
               </p>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                {categories.slice(0, 6).map((category) => (
+                {popularCategories.map((category) => (
                   <Link
                     key={category.id}
-                    href={category.href}
+                    href={`/products/${category.id}`}
                     onClick={onClose}
                     className="relative aspect-[4/3] overflow-hidden group"
                   >

@@ -3,15 +3,18 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Navbar from '@/components/navbar'
 import FooterV2 from '@/components/footer-v2'
-import { categories, getProductsByCategory, getCategoryBySlug, type ProductCategory } from '@/lib/data'
+import FavoriteButton from '@/components/favorite-button'
+import { getCategoryBySlug, getProductsByCategory, getCategories } from '@/lib/supabase/queries'
+import { type ProductCategory } from '@/lib/data'
 
 export async function generateStaticParams() {
+  const categories = await getCategories()
   return categories.map((c) => ({ category: c.id }))
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ category: string }> }) {
   const { category: slug } = await params
-  const cat = getCategoryBySlug(slug)
+  const cat = await getCategoryBySlug(slug)
   if (!cat) return { title: 'INTERloft' }
   return {
     title: `${cat.label} — INTERloft`,
@@ -25,10 +28,10 @@ export default async function CategoryPage({
   params: Promise<{ category: string }>
 }) {
   const { category: slug } = await params
-  const category = getCategoryBySlug(slug)
+  const category = await getCategoryBySlug(slug)
   if (!category) notFound()
 
-  const products = getProductsByCategory(slug as ProductCategory)
+  const products = await getProductsByCategory(slug)
 
   return (
     <div className="bg-background min-h-screen">
@@ -39,8 +42,8 @@ export default async function CategoryPage({
         <h1 className="font-serif text-[clamp(2.5rem,5vw,4rem)] font-light text-foreground">
           {category.label}
         </h1>
-        <Link 
-          href="/products" 
+        <Link
+          href="/products"
           className="font-sans text-xs tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground transition-colors pb-2"
         >
           Toutes les collections
@@ -72,6 +75,11 @@ export default async function CategoryPage({
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                   <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/5 transition-colors duration-500" />
+
+                  {/* Favorite Button */}
+                  <div className="absolute top-4 right-4 z-20">
+                    <FavoriteButton productId={product.id} />
+                  </div>
                 </div>
                 <div className="pt-4">
                   <h2 className="font-serif text-lg font-light text-foreground">

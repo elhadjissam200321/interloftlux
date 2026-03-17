@@ -1,13 +1,19 @@
 import { Metadata } from 'next'
 import Navbar from '@/components/navbar'
 import FooterV2 from '@/components/footer-v2'
+import { getPageContent } from '@/lib/supabase/queries'
 
 export const metadata: Metadata = {
   title: 'Confidentialité | INTERloft',
   description: 'Politique de confidentialité et protection des données personnelles chez INTERloft.',
 }
 
-export default function ConfidentialitePage() {
+export default async function ConfidentialitePage() {
+  const page = await getPageContent('confidentialite')
+
+  const title = page?.title || 'Politique de Confidentialité'
+  const updatedAt = page?.subtitle || 'Mars 2026'
+
   return (
     <main>
       <Navbar />
@@ -16,9 +22,9 @@ export default function ConfidentialitePage() {
           {/* Header */}
           <div className="mb-16 md:mb-24">
             <h1 className="font-serif text-5xl md:text-6xl font-light text-foreground mb-8">
-              Politique de Confidentialité
+              {title}
             </h1>
-            <p className="label-text text-muted-foreground">Dernière mise à jour : Mars 2026</p>
+            <p className="label-text text-muted-foreground">Dernière mise à jour : {updatedAt}</p>
           </div>
 
           {/* Content */}

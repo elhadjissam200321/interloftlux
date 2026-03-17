@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { ChevronDown } from 'lucide-react'
-import { collections } from '@/lib/data'
 
 interface CollectionsDropdownProps {
   variant?: 'light' | 'dark'
@@ -12,11 +11,34 @@ interface CollectionsDropdownProps {
 
 export default function CollectionsDropdown({ variant = 'dark', className = '' }: CollectionsDropdownProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const [collections, setCollections] = useState<any[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [hasFetched, setHasFetched] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
+
+  // Fetch collections when dropdown opens for the first time
+  const fetchCollections = async () => {
+    if (hasFetched) return
+
+    setIsLoading(true)
+    try {
+      const res = await fetch('/api/collections')
+      const data = await res.json()
+      setCollections(data)
+      setHasFetched(true)
+    } catch (error) {
+      console.error('Failed to fetch collections:', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   const handleToggle = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
+    if (!isOpen) {
+      fetchCollections()
+    }
     setIsOpen(!isOpen)
   }
 
@@ -44,8 +66,8 @@ export default function CollectionsDropdown({ variant = 'dark', className = '' }
     return () => document.removeEventListener('keydown', handleEscape)
   }, [])
 
-  const textColor = variant === 'light' 
-    ? 'text-background/80 hover:text-background' 
+  const textColor = variant === 'light'
+    ? 'text-background/80 hover:text-background'
     : 'text-foreground hover:opacity-60'
 
   const dropdownBg = variant === 'light'
@@ -66,8 +88,8 @@ export default function CollectionsDropdown({ variant = 'dark', className = '' }
         aria-haspopup="true"
       >
         Collections
-        <ChevronDown 
-          size={12} 
+        <ChevronDown
+          size={12}
           strokeWidth={1.5}
           className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
         />
@@ -75,24 +97,32 @@ export default function CollectionsDropdown({ variant = 'dark', className = '' }
 
       {/* Dropdown panel */}
       <div
-        className={`absolute top-full left-0 mt-4 min-w-[220px] py-4 transition-all duration-300 ease-out z-[60] ${dropdownBg} ${
-          isOpen 
-            ? 'opacity-100 translate-y-0 pointer-events-auto' 
+        className={`absolute top-full left-0 mt-4 min-w-[220px] py-4 transition-all duration-300 ease-out z-[60] ${dropdownBg} ${isOpen
+            ? 'opacity-100 translate-y-0 pointer-events-auto'
             : 'opacity-0 -translate-y-2 pointer-events-none'
-        }`}
+          }`}
       >
-        <nav className="flex flex-col">
-          {collections.map((collection) => (
-            <Link
-              key={collection.id}
-              href={collection.href}
-              onClick={() => setIsOpen(false)}
-              className={`px-5 py-2.5 text-xs tracking-[0.2em] uppercase transition-colors ${dropdownTextColor}`}
-            >
-              {collection.label}
-            </Link>
-          ))}
-        </nav>
+        {isLoading ? (
+          <div className="px-5 py-3">
+            <div className="flex items-center gap-3">
+              <div className="w-3 h-3 border border-current border-t-transparent rounded-full animate-spin opacity-50" />
+              <span className={`text-xs tracking-wider ${dropdownTextColor}`}>Chargement...</span>
+            </div>
+          </div>
+        ) : (
+          <nav className="flex flex-col">
+            {collections.map((collection) => (
+              <Link
+                key={collection.id}
+                href={`/products/${collection.id}`}
+                onClick={() => setIsOpen(false)}
+                className={`px-5 py-2.5 text-xs tracking-[0.2em] uppercase transition-colors ${dropdownTextColor}`}
+              >
+                {collection.label}
+              </Link>
+            ))}
+          </nav>
+        )}
       </div>
     </div>
   )

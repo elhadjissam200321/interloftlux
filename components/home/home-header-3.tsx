@@ -21,13 +21,13 @@ function ProduitsNav() {
   }, [])
 
   const categories = [
-    { label: 'Nouveautés',         href: '/products/nouveautes' },
-    { label: 'Canapés',            href: '/products/canapes' },
-    { label: 'Canapés composables',href: '/products/canapes-composables' },
-    { label: 'Fauteuils',          href: '/products/fauteuils' },
-    { label: 'Lits',               href: '/products/lits' },
-    { label: 'Meubles',            href: '/products/meubles' },
-    { label: 'Tringlerie',         href: '/products/tringlerie' },
+    { label: 'Nouveautés', href: '/products/nouveautes' },
+    { label: 'Canapés', href: '/products/canapes' },
+    { label: 'Canapés composables', href: '/products/canapes-composables' },
+    { label: 'Fauteuils', href: '/products/fauteuils' },
+    { label: 'Lits', href: '/products/lits' },
+    { label: 'Meubles', href: '/products/meubles' },
+    { label: 'Tringlerie', href: '/products/tringlerie' },
   ]
 
   return (
@@ -125,9 +125,8 @@ export default function HomeHeader3() {
         {products.map((product, index) => (
           <div
             key={product.id}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-              index === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
-            }`}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
+              }`}
           >
             <Image
               src={product.image}
@@ -152,7 +151,7 @@ export default function HomeHeader3() {
                 src="/images/logo.png"
                 alt="Interloft"
                 fill
-                className="object-contain brightness-0 invert"
+                className="object-contain"
                 priority
               />
             </Link>
@@ -243,9 +242,8 @@ export default function HomeHeader3() {
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
-              className={`h-px transition-all duration-500 ${
-                index === currentIndex ? 'bg-background w-10' : 'bg-background/40 w-6'
-              }`}
+              className={`h-px transition-all duration-500 ${index === currentIndex ? 'bg-background w-10' : 'bg-background/40 w-6'
+                }`}
               aria-label={`Slide ${index + 1}`}
             />
           ))}
@@ -258,9 +256,8 @@ export default function HomeHeader3() {
 
       {/* ── Mobile Menu Overlay ── */}
       <div
-        className={`fixed inset-0 z-50 flex flex-col justify-center items-center transition-all duration-500 ${
-          mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
+        className={`fixed inset-0 z-50 flex flex-col justify-center items-center transition-all duration-500 ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          }`}
         style={{ backgroundColor: 'var(--color-mobile-menu)' }}
       >
         <button

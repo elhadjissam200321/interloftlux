@@ -43,21 +43,20 @@ export default function Navbar() {
     <>
       {/* Search Modal */}
       <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
-      
+
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? 'backdrop-blur-sm border-b border-border' : 'bg-transparent'
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'backdrop-blur-sm border-b border-border' : 'bg-transparent'
+          }`}
         style={scrolled ? { backgroundColor: 'var(--color-navbar)' } : undefined}
       >
         <div className="flex items-center justify-between px-6 md:px-12 h-16">
           {/* Logo */}
-          <Link href="/" className="relative h-10 w-28">
+          <Link href="/" className="relative h-12 w-[134px]">
             <Image
               src="/images/logo.png"
               alt="Interloft"
               fill
-              className={`object-contain transition-all ${scrolled ? '' : 'brightness-0 invert'}`}
+              className="object-contain transition-all"
               priority
             />
           </Link>
@@ -66,52 +65,47 @@ export default function Navbar() {
           <nav className="hidden md:flex items-center gap-10">
             <Link
               href="/about"
-              className={`nav-link transition-opacity hover:opacity-60 ${
-                scrolled ? 'text-foreground' : 'text-background'
-              }`}
+              className={`nav-link transition-opacity hover:opacity-60 ${scrolled ? 'text-foreground' : 'text-background'
+                }`}
             >
               Introduction
             </Link>
-            
+
             <ProductsDropdown variant={scrolled ? 'dark' : 'light'} />
-            
+
             <CollectionsDropdown variant={scrolled ? 'dark' : 'light'} />
-            
+
             <Link
               href="/collaborations"
-              className={`nav-link transition-opacity hover:opacity-60 ${
-                scrolled ? 'text-foreground' : 'text-background'
-              }`}
+              className={`nav-link transition-opacity hover:opacity-60 ${scrolled ? 'text-foreground' : 'text-background'
+                }`}
             >
               Collaborations
             </Link>
-            
+
             <Link
               href="/contact"
-              className={`nav-link transition-opacity hover:opacity-60 ${
-                scrolled ? 'text-foreground' : 'text-background'
-              }`}
+              className={`nav-link transition-opacity hover:opacity-60 ${scrolled ? 'text-foreground' : 'text-background'
+                }`}
             >
               Contact
             </Link>
-            
+
             {/* Search and Account icons */}
             <div className="flex items-center gap-4 ml-4">
               <button
                 onClick={() => setSearchOpen(true)}
                 aria-label="Rechercher"
-                className={`transition-opacity hover:opacity-60 cursor-pointer ${
-                  scrolled ? 'text-foreground' : 'text-background'
-                }`}
+                className={`transition-opacity hover:opacity-60 cursor-pointer ${scrolled ? 'text-foreground' : 'text-background'
+                  }`}
               >
                 <Search size={16} strokeWidth={1.5} />
               </button>
               <Link
                 href="/compte"
                 aria-label="Compte"
-                className={`transition-opacity hover:opacity-60 ${
-                  scrolled ? 'text-foreground' : 'text-background'
-                }`}
+                className={`transition-opacity hover:opacity-60 ${scrolled ? 'text-foreground' : 'text-background'
+                  }`}
               >
                 <User size={16} strokeWidth={1.5} />
               </Link>
@@ -121,25 +115,21 @@ export default function Navbar() {
           {/* Mobile hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className={`md:hidden flex flex-col gap-1.5 p-1 transition-colors ${
-              scrolled ? 'text-foreground' : 'text-background'
-            }`}
+            className={`md:hidden flex flex-col gap-1.5 p-1 transition-colors ${scrolled ? 'text-foreground' : 'text-background'
+              }`}
             aria-label="Menu"
           >
             <span
-              className={`block w-6 h-px bg-current transition-all duration-300 ${
-                menuOpen ? 'rotate-45 translate-y-2' : ''
-              }`}
+              className={`block w-6 h-px bg-current transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-2' : ''
+                }`}
             />
             <span
-              className={`block w-6 h-px bg-current transition-all duration-300 ${
-                menuOpen ? 'opacity-0' : ''
-              }`}
+              className={`block w-6 h-px bg-current transition-all duration-300 ${menuOpen ? 'opacity-0' : ''
+                }`}
             />
             <span
-              className={`block w-6 h-px bg-current transition-all duration-300 ${
-                menuOpen ? '-rotate-45 -translate-y-2' : ''
-              }`}
+              className={`block w-6 h-px bg-current transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-2' : ''
+                }`}
             />
           </button>
         </div>
@@ -147,9 +137,8 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed inset-0 z-40 flex flex-col justify-center items-center transition-all duration-500 ${
-          menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
+        className={`fixed inset-0 z-40 flex flex-col justify-center items-center transition-all duration-500 ${menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          }`}
         style={{ backgroundColor: 'var(--color-mobile-menu)' }}
       >
         <nav className="flex flex-col items-center gap-8">
@@ -160,11 +149,11 @@ export default function Navbar() {
           >
             Introduction
           </Link>
-          
+
           <MobileProductsMenu onLinkClick={() => setMenuOpen(false)} />
-          
+
           <MobileCollectionsMenu onLinkClick={() => setMenuOpen(false)} />
-          
+
           <Link
             href="/collaborations"
             onClick={() => setMenuOpen(false)}
@@ -172,7 +161,7 @@ export default function Navbar() {
           >
             Collaborations
           </Link>
-          
+
           <Link
             href="/contact"
             onClick={() => setMenuOpen(false)}

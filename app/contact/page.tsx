@@ -1,21 +1,15 @@
-'use client'
-
-import { useState } from 'react'
+import { Suspense } from 'react'
 import Navbar from '@/components/navbar'
 import FooterV2 from '@/components/footer-v2'
+import { getPageContent } from '@/lib/supabase/queries'
+import ContactForm from '@/components/contact/contact-form'
 
-export default function ContactPage() {
-  const [form, setForm] = useState({ nom: '', email: '', message: '' })
-  const [submitted, setSubmitted] = useState(false)
+export default async function ContactPage() {
+  const page = await getPageContent('contact')
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    setForm({ ...form, [e.target.name]: e.target.value })
-  }
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setSubmitted(true)
-  }
+  const title = page?.title || 'Contact'
+  const subtitle = page?.subtitle || 'Nous contacter'
+  const description = page?.description || 'Pour toute demande d\'information concernant nos collections ou nos produits, contactez notre équipe. Nous vous répondrons dans les meilleurs délais.'
 
   return (
     <div className="bg-background min-h-screen">
@@ -23,9 +17,9 @@ export default function ContactPage() {
 
       {/* Header */}
       <div className="pt-32 pb-16 px-6 md:px-12 border-b border-border">
-        <p className="label-text mb-4">Nous contacter</p>
+        <p className="label-text mb-4">{subtitle}</p>
         <h1 className="font-serif text-[clamp(3rem,7vw,6rem)] font-light text-foreground leading-none">
-          Contact
+          {title}
         </h1>
       </div>
 
@@ -34,8 +28,7 @@ export default function ContactPage() {
         {/* Left: info */}
         <div>
           <p className="font-sans text-sm leading-relaxed text-muted-foreground max-w-sm mb-16">
-            Pour toute demande d&rsquo;information concernant nos collections ou nos produits,
-            contactez notre équipe. Nous vous répondrons dans les meilleurs délais.
+            {description}
           </p>
 
           <div className="space-y-8">
@@ -71,86 +64,9 @@ export default function ContactPage() {
 
         {/* Right: form */}
         <div>
-          {submitted ? (
-            <div className="py-20 text-center">
-              <div className="w-12 h-px bg-foreground mx-auto mb-8" />
-              <h2 className="font-serif text-3xl font-light text-foreground mb-4">
-                Message envoyé
-              </h2>
-              <p className="font-sans text-sm text-muted-foreground">
-                Nous vous contacterons dans les meilleurs délais.
-              </p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-8">
-              {/* Nom */}
-              <div>
-                <label
-                  htmlFor="nom"
-                  className="block label-text mb-3"
-                >
-                  Nom
-                </label>
-                <input
-                  id="nom"
-                  name="nom"
-                  type="text"
-                  required
-                  value={form.nom}
-                  onChange={handleChange}
-                  className="w-full border-b border-border bg-transparent py-3 font-sans text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors"
-                  placeholder="Votre nom complet"
-                />
-              </div>
-
-              {/* Email */}
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block label-text mb-3"
-                >
-                  Email
-                </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  value={form.email}
-                  onChange={handleChange}
-                  className="w-full border-b border-border bg-transparent py-3 font-sans text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors"
-                  placeholder="votre@email.com"
-                />
-              </div>
-
-              {/* Message */}
-              <div>
-                <label
-                  htmlFor="message"
-                  className="block label-text mb-3"
-                >
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  rows={6}
-                  value={form.message}
-                  onChange={handleChange}
-                  className="w-full border-b border-border bg-transparent py-3 font-sans text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground transition-colors resize-none"
-                  placeholder="Votre message..."
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full font-sans text-xs tracking-[0.3em] uppercase text-primary-foreground bg-primary py-5 hover:opacity-80 transition-opacity"
-              >
-                Envoyer
-              </button>
-            </form>
-          )}
+          <Suspense fallback={<div className="py-20 text-center opacity-50">Chargement du formulaire...</div>}>
+            <ContactForm />
+          </Suspense>
         </div>
       </div>
 

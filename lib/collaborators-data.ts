@@ -17,7 +17,7 @@ export interface Collaborator {
   id: string
   slug: string
   name: string
-  profession: 'Architecte' | 'Designer d\'Intérieur' | 'Studio de Design'
+  profession: 'Architecte' | 'Designer d\'Intérieur'
   city: string
   image: string
   heroImage: string
@@ -102,46 +102,6 @@ export const collaborators: Collaborator[] = [
     }
   },
   {
-    id: '3',
-    slug: 'studio-nour',
-    name: 'Studio Nour',
-    profession: 'Studio de Design',
-    city: 'Rabat',
-    image: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80',
-    heroImage: 'https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=1600&q=80',
-    bio: 'Studio Nour est un collectif de designers basé à Rabat, fondé par Sara Tazi et Omar Fassi. Le studio est reconnu pour son approche multidisciplinaire, combinant architecture d\'intérieur, design de mobilier et direction artistique.',
-    collaborationStory: 'Notre partenariat avec Studio Nour a commencé par un projet ambitieux : concevoir l\'intégralité du mobilier pour un nouveau concept de restaurant à Rabat. Cette collaboration intense a révélé une compatibilité créative exceptionnelle, donnant naissance à une série de projets qui repoussent les limites du design marocain contemporain.',
-    projects: [
-      {
-        id: 'p6',
-        name: 'Restaurant Terrasse',
-        location: 'Rabat',
-        description: 'Restaurant gastronomique avec vue sur la mer.',
-        image: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=800&q=80'
-      },
-      {
-        id: 'p7',
-        name: 'Concept Store Océan',
-        location: 'Casablanca',
-        description: 'Espace retail expérientiel de 400m².',
-        image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80'
-      },
-      {
-        id: 'p8',
-        name: 'Bureaux Agdal',
-        location: 'Rabat',
-        description: 'Aménagement d\'un espace de coworking créatif.',
-        image: 'https://images.unsplash.com/photo-1600494603989-9650cf6ddd3d?w=800&q=80'
-      }
-    ],
-    featuredProject: {
-      name: 'Restaurant Terrasse',
-      description: 'Ce restaurant est devenu une référence pour le design d\'intérieur à Rabat. Chaque élément de mobilier a été pensé pour compléter l\'expérience culinaire, des tables en chêne massif aux assises en cuir pleine fleur, créant une atmosphère à la fois sophistiquée et accueillante.',
-      materialsUsed: ['Chêne européen', 'Cuir pleine fleur', 'Acier patiné', 'Marbre local'],
-      image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1600&q=80'
-    }
-  },
-  {
     id: '4',
     slug: 'leila-chraibi',
     name: 'Leila Chraibi',
@@ -207,39 +167,6 @@ export const collaborators: Collaborator[] = [
       image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1600&q=80'
     }
   },
-  {
-    id: '6',
-    slug: 'atelier-mina',
-    name: 'Atelier Mina',
-    profession: 'Studio de Design',
-    city: 'Fès',
-    image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80',
-    heroImage: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1600&q=80',
-    bio: 'Atelier Mina, fondé par Mina El Glaoui, est un studio de design spécialisé dans la réinterprétation des arts décoratifs marocains. Basé dans la médina de Fès, le studio collabore étroitement avec les artisans locaux.',
-    collaborationStory: 'Notre partenariat avec Atelier Mina est né d\'une passion commune pour l\'artisanat fassi. Ensemble, nous avons développé une approche unique qui intègre les techniques ancestrales du zellige, de la marqueterie et du travail du cuir dans des designs résolument contemporains.',
-    projects: [
-      {
-        id: 'p13',
-        name: 'Riad des Arts',
-        location: 'Fès',
-        description: 'Transformation d\'un riad en galerie d\'art et résidence.',
-        image: 'https://images.unsplash.com/photo-1600891964092-4316c288032e?w=800&q=80'
-      },
-      {
-        id: 'p14',
-        name: 'Boutique Artisanale',
-        location: 'Fès',
-        description: 'Concept store célébrant l\'artisanat marocain.',
-        image: 'https://images.unsplash.com/photo-1600494603989-9650cf6ddd3d?w=800&q=80'
-      }
-    ],
-    featuredProject: {
-      name: 'Riad des Arts',
-      description: 'Ce riad est devenu un laboratoire d\'expérimentation où tradition et innovation se rencontrent. Les meubles que nous avons créés intègrent des techniques artisanales millénaires dans des formes contemporaines, créant des pièces uniques qui sont autant des œuvres d\'art que des objets fonctionnels.',
-      materialsUsed: ['Cèdre sculpté', 'Zellige de Fès', 'Cuir fassi', 'Laiton ciselé'],
-      image: 'https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=1600&q=80'
-    }
-  }
 ]
 
 export function getCollaboratorBySlug(slug: string): Collaborator | undefined {

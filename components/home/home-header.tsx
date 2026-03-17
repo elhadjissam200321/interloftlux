@@ -17,6 +17,14 @@ export default function HomeHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
 
+  // Auto-play logic
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % products.length)
+    }, 6000)
+    return () => clearInterval(timer)
+  }, [])
+
   return (
     <>
       <header className="w-full relative h-screen min-h-[600px] overflow-hidden bg-foreground">
@@ -24,9 +32,8 @@ export default function HomeHeader() {
         {products.map((product, index) => (
           <div
             key={product.id}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-              index === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
-            }`}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
+              }`}
           >
             <Image
               src={product.image}
@@ -43,12 +50,12 @@ export default function HomeHeader() {
 
         {/* Logo centered at top */}
         <div className="absolute top-8 left-1/2 -translate-x-1/2 z-30">
-          <Link href="/" className="relative block h-14 md:h-20 w-36 md:w-48">
+          <Link href="/" className="relative block h-[62px] md:h-[88px] w-[158px] md:w-[211px]">
             <Image
               src="/images/logo.png"
               alt="Interloft"
               fill
-              className="object-contain brightness-0 invert"
+              className="object-contain"
               priority
             />
           </Link>
@@ -65,16 +72,16 @@ export default function HomeHeader() {
 
         {/* Icons — top right */}
         <div className="absolute top-8 right-8 md:top-10 md:right-12 z-30 flex items-center gap-5">
-          <button 
+          <button
             onClick={() => setSearchOpen(true)}
-            aria-label="Rechercher" 
+            aria-label="Rechercher"
             className="text-background/80 hover:text-background transition-colors cursor-pointer"
           >
             <Search size={16} strokeWidth={1.5} />
           </button>
-          <Link 
+          <Link
             href="/compte"
-            aria-label="Compte" 
+            aria-label="Compte"
             className="text-background/80 hover:text-background transition-colors"
           >
             <User size={16} strokeWidth={1.5} />
@@ -82,9 +89,10 @@ export default function HomeHeader() {
         </div>
 
         {/* Footer overlay — pinned to bottom of hero */}
-        <div className="absolute bottom-0 left-0 right-0 z-20">
+        <div className="absolute bottom-0 left-0 right-0 z-20 bg-gradient-to-t from-foreground/60 via-foreground/30 to-transparent pt-20">
           <FooterV2 overlay />
         </div>
+
       </header>
 
       {/* Search Modal */}
@@ -92,9 +100,8 @@ export default function HomeHeader() {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 z-50 flex flex-col justify-center items-center transition-all duration-500 ${
-          mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
+        className={`fixed inset-0 z-50 flex flex-col justify-center items-center transition-all duration-500 ${mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          }`}
         style={{ backgroundColor: 'var(--color-mobile-menu)' }}
       >
         {/* Close button */}
@@ -114,11 +121,11 @@ export default function HomeHeader() {
           >
             Introduction
           </Link>
-          
+
           <MobileProductsMenu onLinkClick={() => setMobileMenuOpen(false)} />
-          
+
           <MobileCollectionsMenu onLinkClick={() => setMobileMenuOpen(false)} />
-          
+
           <Link
             href="/collaborations"
             onClick={() => setMobileMenuOpen(false)}
@@ -126,7 +133,7 @@ export default function HomeHeader() {
           >
             Collaborations
           </Link>
-          
+
           <Link
             href="/contact"
             onClick={() => setMobileMenuOpen(false)}

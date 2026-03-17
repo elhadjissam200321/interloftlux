@@ -1,13 +1,19 @@
 import { Metadata } from 'next'
 import Navbar from '@/components/navbar'
 import FooterV2 from '@/components/footer-v2'
+import { getPageContent } from '@/lib/supabase/queries'
 
 export const metadata: Metadata = {
   title: 'Politique Cookies | INTERloft',
   description: 'Politique de gestion des cookies et technologies de suivi chez INTERloft.',
 }
 
-export default function CookiesPage() {
+export default async function CookiesPage() {
+  const page = await getPageContent('cookies')
+
+  const title = page?.title || 'Politique Cookies'
+  const updatedAt = page?.subtitle || 'Mars 2026'
+
   return (
     <main>
       <Navbar />
@@ -16,9 +22,9 @@ export default function CookiesPage() {
           {/* Header */}
           <div className="mb-16 md:mb-24">
             <h1 className="font-serif text-5xl md:text-6xl font-light text-foreground mb-8">
-              Politique Cookies
+              {title}
             </h1>
-            <p className="label-text text-muted-foreground">Dernière mise à jour : Mars 2026</p>
+            <p className="label-text text-muted-foreground">Dernière mise à jour : {updatedAt}</p>
           </div>
 
           {/* Content */}
@@ -32,7 +38,7 @@ export default function CookiesPage() {
 
             <section>
               <h2 className="font-serif text-2xl font-light mb-4">Types de cookies que nous utilisons</h2>
-              
+
               <div className="space-y-6">
                 <div>
                   <h3 className="font-serif text-lg font-light mb-2">Cookies essentiels</h3>

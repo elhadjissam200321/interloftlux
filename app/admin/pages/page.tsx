@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { FileText, Edit } from 'lucide-react'
+import SeedCMSButton from '@/components/admin/seed-cms-button'
 
 export default async function AdminPagesPage() {
     const supabase = await createClient()
@@ -17,7 +18,8 @@ export default async function AdminPagesPage() {
         { id: 'collaborations', title: 'Collaborations' },
         { id: 'contact', title: 'Contact' },
         { id: 'conditions', title: 'Conditions Générales' },
-        { id: 'confidentialite', title: 'Confidentialité' }
+        { id: 'confidentialite', title: 'Confidentialité' },
+        { id: 'cookies', title: 'Politique Cookies' }
     ]
 
     const mergedPages = defaultPages.map(dp => {
@@ -37,6 +39,7 @@ export default async function AdminPagesPage() {
                     <h1 className="font-serif text-4xl mb-4">Gestion des Pages</h1>
                     <p className="text-muted-foreground text-sm">Modifiez le contenu textuel des pages statiques.</p>
                 </div>
+                <SeedCMSButton />
             </div>
 
             <div className="grid gap-6">
